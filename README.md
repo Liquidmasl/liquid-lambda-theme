@@ -263,9 +263,19 @@ gtk-update-icon-cache -f ~/.local/share/icons/Everforest-Dark
 # Settings → Desktop → Appearance → Icons → Everforest-Dark
 ```
 
-Wallpapers live in [cool-wallpapers](https://github.com/atraxsrc/cool-wallpapers),
-folder [`omarchy/greek-noir/`](https://github.com/atraxsrc/cool-wallpapers/tree/main/omarchy/greek-noir)
-(mirrored from the upstream theme, MIT, licence in the folder):
+Wallpapers live in [cool-wallpapers](https://github.com/atraxsrc/cool-wallpapers).
+
+Two wallpapers made for this rice, recoloured from the COSMIC astronaut and the
+Harbor Dark reaper so they sit on the exact window background:
+
+| File | What it is |
+|------|------------|
+| [`cosmic-astronaut-noir-3840x2160.png`](https://github.com/atraxsrc/cool-wallpapers/blob/main/cosmic/cosmic-astronaut-noir-3840x2160.png) | COSMIC astronaut in grey-sage with orange lines on charcoal |
+| [`reaper-skull-noir-3440x1440.png`](https://github.com/atraxsrc/cool-wallpapers/blob/main/reaper/reaper-skull-noir-3440x1440.png) | Reaper in khaki and orange on charcoal |
+
+From the upstream theme, folder
+[`omarchy/greek-noir/`](https://github.com/atraxsrc/cool-wallpapers/tree/main/omarchy/greek-noir)
+(MIT, licence in the folder):
 
 | File | What it is |
 |------|------------|
