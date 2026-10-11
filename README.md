@@ -1,6 +1,6 @@
 <div align="center">
 
-# Pop!_OS · COSMIC · Noir
+# COSMIC · Noir
 
 Pop!_OS 24.04 on COSMIC in charcoal, sage and orange: desktop, terminal,
 shell, Firefox, cursor, wallpapers. The dark half of a pair; the light half is
