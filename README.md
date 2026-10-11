@@ -15,6 +15,7 @@ shell, Firefox, cursor, wallpapers. The dark half of a pair; the light half is
 </div>
 
 ---
+![Pop!_OS COSMIC desktop with the Noir theme](assets/screenshot.png)
 
 ## Palette
 
@@ -85,7 +86,10 @@ is khaki. Errors are told apart by bold and underline.
 ├── zsh
 │   ├── noir.zsh                 # LS_COLORS, highlighting colours, aliases, starship
 │   └── install.sh
-├── assets/cursors               # cursor preview
+├── assets
+│   ├── cursors/                 # cursor preview
+│   ├── screenshot.png           # README screenshot
+│   └── wallpaper.png            # the sushi switch on the bare desktop
 ├── docs
 │   └── showcase.md              # the rice describing itself, for the Postilla pane of the screenshot
 ├── LICENSE
@@ -293,7 +297,7 @@ palette, each as a 3840 wide PNG with the small JPEG it was upscaled from next t
 | [`noir-reaper-skull-3840x1609.png`](https://github.com/atraxsrc/cool-wallpapers/blob/main/cosmic/noir/noir-reaper-skull-3840x1609.png) | Harbor Dark reaper in khaki and orange on charcoal |
 | [`noir-samurai-3840x2166.png`](https://github.com/atraxsrc/cool-wallpapers/blob/main/cosmic/noir/noir-samurai-3840x2166.png) | Samurai silhouette, charcoal and orange |
 | [`noir-hyundai-blueprint-3840x2160.png`](https://github.com/atraxsrc/cool-wallpapers/blob/main/cosmic/noir/noir-hyundai-blueprint-3840x2160.png) | Hyundai N Vision blueprint in sage line work |
-| [`noir-sushi-switch-3840x1609.png`](https://github.com/atraxsrc/cool-wallpapers/blob/main/cosmic/noir/noir-sushi-switch-3840x1609.png) | Sushi and a Switch in the Noir palette |
+| [`noir-sushi-switch-3840x1609.png`](https://github.com/atraxsrc/cool-wallpapers/blob/main/cosmic/noir/noir-sushi-switch-3840x1609.png) | Sushi and a Switch in the Noir palette, the one in the screenshot |
 
 
 From the upstream theme, folder
@@ -307,6 +311,8 @@ From the upstream theme, folder
 | [`greek-noir-bg2-4096x2905.jpg`](https://github.com/atraxsrc/cool-wallpapers/blob/main/omarchy/greek-noir/greek-noir-bg2-4096x2905.jpg) | Soldier and black wolf, grey background |
 
 Settings → Wallpaper → Add image → the file you downloaded.
+
+![The sushi switch wallpaper on the Noir desktop, panel only](assets/wallpaper.png)
 
 ---
 

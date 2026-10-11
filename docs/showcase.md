@@ -42,8 +42,8 @@ flowchart LR
 - [x] `./cosmic/install.sh` for fonts, **Everforest-Dark** icons and the terminal look
 - [x] `./zsh/install.sh`, `./lsd/install.sh`, `./fastfetch/install.sh`
 - [x] Cursor: Oxygen-02-Vibrant-Orange
-- [ ] Wallpaper: `cool-wallpapers/cosmic/noir/noir-reaper-skull`
-- [ ] Screenshot for the README
+- [x] Wallpaper: `cool-wallpapers/cosmic/noir/noir-sushi-switch`
+- [x] Screenshot for the README
 
 ## The baseline every rice shares
 
