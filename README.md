@@ -79,6 +79,7 @@ is khaki. Errors are told apart by bold and underline.
 │   ├── config.yaml              # theme: custom
 │   ├── colors.yaml              # permission / size / date / git columns
 │   └── install.sh
+├── nvim                         # Neovim colorscheme, LazyVim spec, RON syntax, install.sh
 ├── scripts
 │   └── update_system.sh         # nala + flatpak, orange / sage ANSI
 ├── zsh
@@ -239,6 +240,23 @@ grey-sage keys. `install.sh` backs up any existing
 fastfetch
 ```
 
+### Neovim
+
+`nvim/` carries the rice into Neovim: a dependency-free colorscheme built from
+the palette (`nvim/colors/noir.lua`), a LazyVim spec that selects it and makes
+sure the treesitter parsers for the files in this repo are installed
+(`nvim/lua/plugins/noir.lua`), and a small RON syntax file so `cosmic/*.ron`
+is coloured even before the parser exists. `:terminal` inside Neovim uses the
+Noir scheme.
+
+```bash
+./nvim/install.sh
+# restart nvim; LazyVim switches to the noir colorscheme
+```
+
+Without LazyVim, copy `nvim/colors/noir.lua` to `~/.config/nvim/colors/` and
+run `:colorscheme noir`.
+
 ### btop
 
 `btop/Noir.theme`: charcoal background, dim grey boxes, orange titles, meters
@@ -313,6 +331,7 @@ cd cosmic-noir-theme
 ./zsh/install.sh
 ./lsd/install.sh
 ./fastfetch/install.sh
+./nvim/install.sh
 mkdir -p ~/.config/btop/themes && cp btop/Noir.theme ~/.config/btop/themes/
 
 # wallpaper
