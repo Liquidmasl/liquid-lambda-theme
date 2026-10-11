@@ -264,14 +264,16 @@ gtk-update-icon-cache -f ~/.local/share/icons/Everforest-Dark
 ```
 
 Wallpapers live in [cool-wallpapers](https://github.com/atraxsrc/cool-wallpapers).
-
-Two wallpapers made for this rice, recoloured from the COSMIC astronaut and the
-Harbor Dark reaper so they sit on the exact window background:
+This rice's own set is in [`cosmic/noir/`](https://github.com/atraxsrc/cool-wallpapers/tree/main/cosmic/noir): four pieces recoloured to the
+palette, each as a 3840 wide PNG with the small JPEG it was upscaled from next to it.
 
 | File | What it is |
 |------|------------|
-| [`cosmic-astronaut-noir-3840x2160.png`](https://github.com/atraxsrc/cool-wallpapers/blob/main/cosmic/cosmic-astronaut-noir-3840x2160.png) | COSMIC astronaut in grey-sage with orange lines on charcoal |
-| [`reaper-skull-noir-3440x1440.png`](https://github.com/atraxsrc/cool-wallpapers/blob/main/reaper/reaper-skull-noir-3440x1440.png) | Reaper in khaki and orange on charcoal |
+| [`noir-reaper-skull-3840x1609.png`](https://github.com/atraxsrc/cool-wallpapers/blob/main/cosmic/noir/noir-reaper-skull-3840x1609.png) | Harbor Dark reaper in khaki and orange on charcoal |
+| [`noir-samurai-3840x2166.png`](https://github.com/atraxsrc/cool-wallpapers/blob/main/cosmic/noir/noir-samurai-3840x2166.png) | Samurai silhouette, charcoal and orange |
+| [`noir-hyundai-blueprint-3840x2160.png`](https://github.com/atraxsrc/cool-wallpapers/blob/main/cosmic/noir/noir-hyundai-blueprint-3840x2160.png) | Hyundai N Vision blueprint in sage line work |
+| [`noir-sushi-switch-3840x1609.png`](https://github.com/atraxsrc/cool-wallpapers/blob/main/cosmic/noir/noir-sushi-switch-3840x1609.png) | Sushi and a Switch in the Noir palette |
+
 
 From the upstream theme, folder
 [`omarchy/greek-noir/`](https://github.com/atraxsrc/cool-wallpapers/tree/main/omarchy/greek-noir)
@@ -313,7 +315,7 @@ mkdir -p ~/.config/btop/themes && cp btop/Noir.theme ~/.config/btop/themes/
 
 # wallpaper
 # Settings → Wallpaper → Add image → a file from
-# https://github.com/atraxsrc/cool-wallpapers/tree/main/omarchy/greek-noir
+# https://github.com/atraxsrc/cool-wallpapers/tree/main/cosmic/noir
 
 # icons (see Icons above) + Maple fonts (https://github.com/subframe7536/maple-font), then
 # fonts, icons, terminal look from cosmic/config/
