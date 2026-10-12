@@ -25,7 +25,7 @@ Stylesheets:
 ```
 firefox/
 ├── theme/            WebExtension theme source (Cosmic Noir)
-│   ├── manifest.json     harbordark's 24 colour keys + a pinned URL bar ring
+│   ├── manifest.json     DarkGold's 24 colour keys + a pinned URL bar ring
 │   └── icons/            32 / 48 / 64 / 96 / 128, cropped from noir-samurai
 ├── chrome/
 │   ├── userChrome.css    browser UI: rounded corners, orange menu hover
@@ -43,7 +43,7 @@ Two layers, use one or both:
 
 ## Theme
 
-Same colour keys and roles as DarkGold's harbordark: icons take the calm
+Same colour keys and roles as DarkGold's Firefox theme: icons take the calm
 accent (sage here, gold there), and everything "hot" (tab line, pressed
 button, menu and sidebar selection, loading) takes the loud one (orange here,
 coral there). One extra key, `toolbar_field_border_focus`, pins the focused
