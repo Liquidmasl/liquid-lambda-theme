@@ -66,6 +66,8 @@ is khaki. Errors are told apart by bold and underline.
 │   ├── install.sh
 │   ├── uninstall.sh
 │   └── README.md
+├── icons
+│   └── install.sh               # Cosmic-Noir icon pack from cosmic-icon-themes
 ├── fastfetch
 │   ├── config.jsonc             # orange / grey-sage fastfetch config
 │   ├── cosmic.txt               # COSMIC logo
@@ -127,12 +129,12 @@ per-rice files.
 | Where | Setting |
 |-------|---------|
 | Fonts | Interface `Maple Normal UI`, monospace `Maple Mono Normal NFM` |
-| Icons | Everforest-Dark |
+| Icons | Cosmic-Noir-Orange |
 | Windows | Minimize / maximize buttons hidden, theme applied to GNOME apps |
 | Terminal | Maple Mono 15 (weights 500 / bold 800 / dim 300), 77% opacity, no header bar, Noir |
 
 Install the [Maple fonts](https://github.com/subframe7536/maple-font) and the
-icons (see Icons below) and import the terminal scheme first, then:
+Cosmic-Noir icons (see Icons below) and import the terminal scheme first, then:
 
 ```bash
 ./cosmic/install.sh
@@ -278,16 +280,21 @@ cp btop/Noir.theme ~/.config/btop/themes/
 
 ## Icons and wallpaper
 
-Icons: **Everforest-Dark** from
-[Fausto-Korpsvart/Everforest-GTK-Theme](https://github.com/Fausto-Korpsvart/Everforest-GTK-Theme):
+Icons: **Cosmic-Noir**, the [Kanagawa icons](https://github.com/Fausto-Korpsvart/Kanagawa-GKT-Theme/tree/main/icons/Kanagawa)
+by Fausto Korpsvart recolored to this palette in
+[cosmic-icon-themes](https://github.com/atraxsrc/cosmic-icon-themes). Folders come in
+three colors: **Orange** `#F25623` (default), **Sage** `#88A57D` and **Dark** `#2A2A2A` with orange symbols.
+
+![Cosmic-Noir folder colors](https://raw.githubusercontent.com/atraxsrc/cosmic-icon-themes/main/previews/Cosmic-Noir.png)
 
 ```bash
-git clone --depth 1 https://github.com/Fausto-Korpsvart/Everforest-GTK-Theme.git
-mkdir -p ~/.local/share/icons
-cp -r Everforest-GTK-Theme/icons/Everforest-Dark ~/.local/share/icons/
-gtk-update-icon-cache -f ~/.local/share/icons/Everforest-Dark
-# Settings → Desktop → Appearance → Icons → Everforest-Dark
+./icons/install.sh                 # Orange folders
+./icons/install.sh --variant Sage  # or Dark
 ```
+
+It downloads the pack from the latest cosmic-icon-themes release, checks its SHA256,
+installs it to `~/.local/share/icons/` and sets it as the COSMIC icon theme.
+Restart open apps afterwards (Files caches icons per window).
 
 Wallpapers live in [cool-wallpapers](https://github.com/atraxsrc/cool-wallpapers).
 This rice's own set is in [`cosmic/noir/`](https://github.com/atraxsrc/cool-wallpapers/tree/main/cosmic/noir): four pieces recoloured to the
@@ -346,7 +353,8 @@ mkdir -p ~/.config/btop/themes && cp btop/Noir.theme ~/.config/btop/themes/
 # Settings → Wallpaper → Add image → a file from
 # https://github.com/atraxsrc/cool-wallpapers/tree/main/cosmic/noir
 
-# icons (see Icons above) + Maple fonts (https://github.com/subframe7536/maple-font), then
+./icons/install.sh                  # icons (see Icons above)
+# Maple fonts (https://github.com/subframe7536/maple-font), then
 # fonts, icons, terminal look from cosmic/config/
 ./cosmic/install.sh
 ```
@@ -363,7 +371,7 @@ mkdir -p ~/.config/btop/themes && cp btop/Noir.theme ~/.config/btop/themes/
 | [lsd](https://github.com/lsd-rs/lsd) | `ls` with icons and colours |
 | [fastfetch](https://github.com/fastfetch-cli/fastfetch) | System info |
 | [btop](https://github.com/aristocratos/btop) | Resource monitor |
-| [Everforest-GTK-Theme](https://github.com/Fausto-Korpsvart/Everforest-GTK-Theme) | Icon pack (Everforest-Dark) |
+| [cosmic-icon-themes](https://github.com/atraxsrc/cosmic-icon-themes) | Icon pack (Cosmic-Noir), recolored from [Kanagawa icons](https://github.com/Fausto-Korpsvart/Kanagawa-GKT-Theme/tree/main/icons/Kanagawa) |
 | [Oxygen-Cursors](https://github.com/wo2ni/Oxygen-Cursors) | Cursor (vibrant orange) |
 
 ## Credits

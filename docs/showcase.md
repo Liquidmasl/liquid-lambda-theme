@@ -39,7 +39,7 @@ flowchart LR
 
 - [x] Import `cosmic/Noir.ron` into Appearance, **Dark** slot
 - [x] Import `cosmic-term/Noir-term.ron`, pick **Noir** for the profile
-- [x] `./cosmic/install.sh` for fonts, **Everforest-Dark** icons and the terminal look
+- [x] `./icons/install.sh` for the **Cosmic-Noir** icons, `./cosmic/install.sh` for fonts and the terminal look
 - [x] `./zsh/install.sh`, `./lsd/install.sh`, `./fastfetch/install.sh`
 - [x] Cursor: Oxygen-02-Vibrant-Orange
 - [x] Wallpaper: `cool-wallpapers/cosmic/noir/noir-sushi-switch`
