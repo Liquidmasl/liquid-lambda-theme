@@ -25,7 +25,7 @@ Stylesheets:
 ```
 firefox/
 ├── theme/            WebExtension theme source (Cosmic Noir)
-│   ├── manifest.json     DarkGold's 24 colour keys + a pinned URL bar ring
+│   ├── manifest.json     DarkGold's 24 colour keys + URL bar ring and selection
 │   └── icons/            32 / 48 / 64 / 96 / 128, cropped from noir-samurai
 ├── chrome/
 │   ├── userChrome.css    browser UI: rounded corners, orange menu hover
@@ -49,8 +49,10 @@ button, menu and sidebar selection, loading) takes the loud one (orange here,
 coral there). One extra key, `toolbar_field_border_focus`, pins the focused
 URL bar ring to orange so it does not fall back to the desktop accent when
 `widget.non-native-theme.use-theme-accent` is on (the Firefox default on
-Linux). Every text colour clears WCAG AA (4.5:1) on its background; icons
-and the tab line clear 3:1.
+Linux). Two more, `toolbar_field_highlight` and `toolbar_field_highlight_text`,
+colour selected text in the URL bar the same way, as DarkGold does. Every
+text colour clears WCAG AA (4.5:1) on its background; icons and the tab
+line clear 3:1.
 
 | Hex       | Where in the theme                          |
 |-----------|---------------------------------------------|
@@ -60,7 +62,7 @@ and the tab line clear 3:1.
 | `#CCD0CF` | Body text                                   |
 | `#959C95` | Inactive tab text, menu border              |
 | `#88A57D` | Icons                                       |
-| `#F25623` | Focused URL bar ring, tab line, pressed button, menu and sidebar selection, loading, attention |
+| `#F25623` | Focused URL bar ring and text selection, tab line, pressed button, menu and sidebar selection, loading, attention |
 
 Build the package:
 
