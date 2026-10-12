@@ -162,7 +162,14 @@ success, khaki in the yellow slot, grey-sage for directories.
 
 ## Firefox
 
-Built-in **Dark** theme plus the stylesheets in `firefox/chrome/`.
+Two layers:
+
+1. **Theme (colours):** install
+   **[cosmic-noir-theme on addons.mozilla.org](https://addons.mozilla.org/en-US/firefox/addon/cosmic-noir-theme/)**.
+   This is the main look.
+2. **Stylesheets (optional):** `firefox/chrome/` adds rounded corners, orange
+   menu hover, orange accents and blank new-tab tiles on top of the add-on
+   (they also work with Firefox's built-in Dark theme):
 
 ```bash
 ./firefox/install.sh
@@ -338,7 +345,10 @@ cd cosmic-noir-theme
 # terminal
 # View → Color schemes → Import cosmic-term/Noir-term.ron
 
-# firefox
+# firefox add-on
+# https://addons.mozilla.org/en-US/firefox/addon/cosmic-noir-theme/
+
+# optional extra chrome
 ./firefox/install.sh
 
 # cursor (then reboot), see cursors/README.md

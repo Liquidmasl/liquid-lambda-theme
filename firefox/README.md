@@ -35,7 +35,7 @@ firefox/
 
 Two layers, use one or both:
 
-1. **Theme (colours):** Cosmic Noir colours the toolbar, tabs, URL bar,
+1. **Theme (colours):** [Cosmic Noir](https://addons.mozilla.org/en-US/firefox/addon/cosmic-noir-theme/) colours the toolbar, tabs, URL bar,
    menus, sidebar and new tab page. This is the main look.
 2. **Stylesheets (optional):** `chrome/` adds rounded corners, orange menu
    hover, orange accents and a blank new-tab grid on top of the theme. They
