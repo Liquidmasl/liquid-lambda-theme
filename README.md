@@ -71,6 +71,7 @@ is khaki. Errors are told apart by bold and underline.
 │   ├── cosmic.txt               # COSMIC logo
 │   └── install.sh
 ├── firefox
+│   ├── theme                    # Cosmic Noir theme add-on (manifest + icons)
 │   ├── chrome
 │   │   ├── userChrome.css       # rounded chrome, soot menus
 │   │   └── userContent.css      # new tab accent
