@@ -93,6 +93,7 @@ is khaki. Errors are told apart by bold and underline.
 │   ├── cursors/                 # cursor preview
 │   ├── screenshot.png           # README screenshot
 │   └── wallpaper.png            # the sushi switch on the bare desktop
+├── backgrounds/                 # wallpapers, noir-<subject>.png (see Icons and wallpaper)
 ├── docs
 │   └── showcase.md              # the rice describing itself, for the Postilla pane of the screenshot
 ├── LICENSE
@@ -305,19 +306,31 @@ Restart open apps afterwards (Files caches icons per window).
 Add `--system` to install to `/usr/share/icons` instead, for every user and the
 login screen (asks for sudo); `--user` is the default.
 
-Wallpapers live in [cool-wallpapers](https://github.com/atraxsrc/cool-wallpapers).
-This rice's own set is in [`cosmic/noir/`](https://github.com/atraxsrc/cool-wallpapers/tree/main/cosmic/noir): four pieces recoloured to the
-palette, each as a 3840 wide PNG with the small JPEG it was upscaled from next to it.
+Wallpapers ship in [`backgrounds/`](backgrounds/), named `noir-<subject>.png`:
+the thirteen subjects every dark rice has, rendered in sage and orange on charcoal.
+The reaper and the blueprint are Harbor Dark subjects, the eagle and the
+portrait are from The Greek (both [HANCORE-linux](https://github.com/HANCORE-linux),
+MIT); the samurai, sushi, geisha, mug and street are from the Tokyo Night set in
+[cool-wallpapers](https://github.com/atraxsrc/cool-wallpapers). Each was rendered
+again in this palette, then upscaled.
 
-| File | What it is |
-|------|------------|
-| [`noir-reaper-skull-3840x1609.png`](https://github.com/atraxsrc/cool-wallpapers/blob/main/cosmic/noir/noir-reaper-skull-3840x1609.png) | Harbor Dark reaper in khaki and orange on charcoal |
-| [`noir-samurai-3840x2166.png`](https://github.com/atraxsrc/cool-wallpapers/blob/main/cosmic/noir/noir-samurai-3840x2166.png) | Samurai silhouette, charcoal and orange |
-| [`noir-hyundai-blueprint-3840x2160.png`](https://github.com/atraxsrc/cool-wallpapers/blob/main/cosmic/noir/noir-hyundai-blueprint-3840x2160.png) | Hyundai N Vision blueprint in sage line work |
-| [`noir-sushi-switch-3840x1609.png`](https://github.com/atraxsrc/cool-wallpapers/blob/main/cosmic/noir/noir-sushi-switch-3840x1609.png) | Sushi and a Switch in the Noir palette, the one in the screenshot |
+| File | Size | What it is |
+|------|------|------------|
+| [`noir-reaper-skull.png`](backgrounds/noir-reaper-skull.png) | 5120x3200 | Harbor Dark reaper in khaki and orange on charcoal |
+| [`noir-hyundai-blueprint.png`](backgrounds/noir-hyundai-blueprint.png) | 5120x3200 | Hyundai N Vision 74 blueprint in sage line work |
+| [`noir-cosmic-astronaut.png`](backgrounds/noir-cosmic-astronaut.png) | 5376x3312 | The COSMIC astronaut |
+| [`noir-samurai.png`](backgrounds/noir-samurai.png) | 5120x3200 | Samurai silhouette against a full moon |
+| [`noir-sushi-switch.png`](backgrounds/noir-sushi-switch.png) | 5120x3200 | Sushi on a Switch in sage and orange, the one in the screenshot |
+| [`noir-geisha-vivid.png`](backgrounds/noir-geisha-vivid.png) | 5120x3200 | Geisha in a patterned kimono inside a circle |
+| [`noir-js-mug.png`](backgrounds/noir-js-mug.png) | 5120x3200 | JS mug with a splash |
+| [`noir-neon-city.png`](backgrounds/noir-neon-city.png) | 5120x3200 | Rainy street of lit shopfronts |
+| [`noir-eagle.png`](backgrounds/noir-eagle.png) | 5376x3312 | Ink eagle head with splashes |
+| [`noir-anime.png`](backgrounds/noir-anime.png) | 5376x3312 | Ink portrait, long hair, splashes |
+| [`noir-city.png`](backgrounds/noir-city.png) | 5376x3312 | Night skyline, one lit tower, a disc in the sky |
+| [`noir-panel.png`](backgrounds/noir-panel.png) | 5120x3200 | Layered circuit panels, one lit strip |
+| [`noir-tower.png`](backgrounds/noir-tower.png) | 5120x3200 | Isometric dark tower on a platform |
 
-
-From the upstream theme, folder
+More from the upstream theme, in [cool-wallpapers](https://github.com/atraxsrc/cool-wallpapers) folder
 [`omarchy/greek-noir/`](https://github.com/atraxsrc/cool-wallpapers/tree/main/omarchy/greek-noir)
 (MIT, licence in the folder):
 
@@ -327,7 +340,7 @@ From the upstream theme, folder
 | [`greek-noir-bg3-3840x2160.png`](https://github.com/atraxsrc/cool-wallpapers/blob/main/omarchy/greek-noir/greek-noir-bg3-3840x2160.png) | Small botanical engravings on dark olive |
 | [`greek-noir-bg2-4096x2905.jpg`](https://github.com/atraxsrc/cool-wallpapers/blob/main/omarchy/greek-noir/greek-noir-bg2-4096x2905.jpg) | Soldier and black wolf, grey background |
 
-Settings → Wallpaper → Add image → the file you downloaded.
+Settings → Wallpaper → Add image → a file from `backgrounds/`, or one you downloaded.
 
 ![The sushi switch wallpaper on the Noir desktop, panel only](assets/wallpaper.png)
 
@@ -362,8 +375,7 @@ cd cosmic-noir-theme
 mkdir -p ~/.config/btop/themes && cp btop/Noir.theme ~/.config/btop/themes/
 
 # wallpaper
-# Settings → Wallpaper → Add image → a file from
-# https://github.com/atraxsrc/cool-wallpapers/tree/main/cosmic/noir
+# Settings → Wallpaper → Add image → a file from backgrounds/ (see Icons and wallpaper above)
 
 ./icons/install.sh                  # icons (see Icons above)
 # Maple fonts (https://github.com/subframe7536/maple-font), then
@@ -389,8 +401,8 @@ mkdir -p ~/.config/btop/themes && cp btop/Noir.theme ~/.config/btop/themes/
 ## Credits
 
 - Palette and wallpapers: [omarchy-greek-noir-theme](https://github.com/HANCORE-linux/omarchy-greek-noir-theme)
-  by HANCORE-linux (MIT). This repo is a COSMIC port; the wallpapers are
-  mirrored in cool-wallpapers, not here.
+  by HANCORE-linux (MIT). This repo is a COSMIC port; the upstream wallpapers
+  are mirrored in cool-wallpapers, the renders for this palette are in `backgrounds/`.
 - Light half: [cosmic-dossier-theme](https://github.com/atraxsrc/cosmic-dossier-theme).
   Shared baseline (frosted glass, squared corners, fonts) from
   [cosmic-darkgold-theme](https://github.com/atraxsrc/cosmic-darkgold-theme).
