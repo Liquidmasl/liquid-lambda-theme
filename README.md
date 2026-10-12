@@ -9,7 +9,7 @@ shell, Firefox, cursor, wallpapers. The dark half of a pair; the light half is
 ![Pop!_OS](https://img.shields.io/badge/Pop!_OS-24.04_LTS-f25623?style=for-the-badge&logo=popos&logoColor=white)
 ![COSMIC](https://img.shields.io/badge/COSMIC-1.0.0-88a57d?style=for-the-badge)
 ![Noir](https://img.shields.io/badge/Theme-Noir-171717?style=for-the-badge&labelColor=f25623)
-![Firefox](https://img.shields.io/badge/Firefox-Noir-f56e0f?style=for-the-badge&logo=firefox-browser&logoColor=white)
+![Firefox](https://img.shields.io/badge/Firefox-Noir-f25623?style=for-the-badge&logo=firefox-browser&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-7d837d?style=for-the-badge)
 
 </div>
