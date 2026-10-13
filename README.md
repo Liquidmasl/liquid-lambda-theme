@@ -309,38 +309,15 @@ Add `--system` to install to `/usr/share/icons` instead, for every user and the
 login screen (asks for sudo); `--user` is the default.
 
 Wallpapers ship in [`backgrounds/`](backgrounds/), named `noir-<subject>.png`:
-the thirteen subjects every dark rice has, rendered in sage and orange on charcoal.
-The reaper and the blueprint are Harbor Dark subjects, the eagle and the
-portrait are from The Greek (both [HANCORE-linux](https://github.com/HANCORE-linux),
-MIT); the samurai, sushi, geisha, mug and street are from the Tokyo Night set in
-[cool-wallpapers](https://github.com/atraxsrc/cool-wallpapers). Each was rendered
-again in this palette, then upscaled.
-
-| File | Size | What it is |
-|------|------|------------|
-| [`noir-reaper-skull.png`](backgrounds/noir-reaper-skull.png) | 5120x3200 | Harbor Dark reaper in khaki and orange on charcoal |
-| [`noir-hyundai-blueprint.png`](backgrounds/noir-hyundai-blueprint.png) | 5120x3200 | Hyundai N Vision 74 blueprint in sage line work |
-| [`noir-cosmic-astronaut.png`](backgrounds/noir-cosmic-astronaut.png) | 5376x3312 | The COSMIC astronaut |
-| [`noir-samurai.png`](backgrounds/noir-samurai.png) | 5120x3200 | Samurai silhouette against a full moon |
-| [`noir-sushi-switch.png`](backgrounds/noir-sushi-switch.png) | 5120x3200 | Sushi on a Switch in sage and orange, the one in the screenshot |
-| [`noir-geisha-vivid.png`](backgrounds/noir-geisha-vivid.png) | 5120x3200 | Geisha in a patterned kimono inside a circle |
-| [`noir-js-mug.png`](backgrounds/noir-js-mug.png) | 5120x3200 | JS mug with a splash |
-| [`noir-neon-city.png`](backgrounds/noir-neon-city.png) | 5120x3200 | Rainy street of lit shopfronts |
-| [`noir-eagle.png`](backgrounds/noir-eagle.png) | 5376x3312 | Ink eagle head with splashes |
-| [`noir-anime.png`](backgrounds/noir-anime.png) | 5376x3312 | Ink portrait, long hair, splashes |
-| [`noir-city.png`](backgrounds/noir-city.png) | 5376x3312 | Night skyline, one lit tower, a disc in the sky |
-| [`noir-panel.png`](backgrounds/noir-panel.png) | 5120x3200 | Layered circuit panels, one lit strip |
-| [`noir-tower.png`](backgrounds/noir-tower.png) | 5120x3200 | Isometric dark tower on a platform |
-
-More from the upstream theme, in [cool-wallpapers](https://github.com/atraxsrc/cool-wallpapers) folder
-[`omarchy/greek-noir/`](https://github.com/atraxsrc/cool-wallpapers/tree/main/omarchy/greek-noir)
-(MIT, licence in the folder):
-
-| File | What it is |
-|------|------------|
-| [`greek-noir-bg1-3840x2400.png`](https://github.com/atraxsrc/cool-wallpapers/blob/main/omarchy/greek-noir/greek-noir-bg1-3840x2400.png) | Figure sinking into dark olive water |
-| [`greek-noir-bg3-3840x2160.png`](https://github.com/atraxsrc/cool-wallpapers/blob/main/omarchy/greek-noir/greek-noir-bg3-3840x2160.png) | Small botanical engravings on dark olive |
-| [`greek-noir-bg2-4096x2905.jpg`](https://github.com/atraxsrc/cool-wallpapers/blob/main/omarchy/greek-noir/greek-noir-bg2-4096x2905.jpg) | Soldier and black wolf, grey background |
+the thirteen subjects every dark rice has, rendered in sage and orange on charcoal:
+the Harbor Dark reaper and Hyundai blueprint, the COSMIC astronaut, the samurai,
+sushi switch, geisha, JS mug and neon street from the Tokyo Night set, The Greek
+eagle and ink portrait, and three new scenes: city, panel and tower.
+The sushi switch is the one in the screenshot.
+The subjects come from [HANCORE-linux](https://github.com/HANCORE-linux) (MIT) and
+[cool-wallpapers](https://github.com/atraxsrc/cool-wallpapers); each was rendered again in this palette, then upscaled.
+More from the upstream theme in cool-wallpapers, folder
+[`omarchy/greek-noir/`](https://github.com/atraxsrc/cool-wallpapers/tree/main/omarchy/greek-noir) (MIT).
 
 Settings → Wallpaper → Add image → a file from `backgrounds/`, or one you downloaded.
 
