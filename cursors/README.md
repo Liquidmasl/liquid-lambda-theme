@@ -1,24 +1,40 @@
 # Cursor
 
-**Oxygen-02-Vibrant-Orange** from the [Oxygen cursors](https://github.com/wo2ni/Oxygen-Cursors),
-patched so it works in COSMIC's own apps.
+**Oxygen** cursors (the original KDE Oxygen designs, as collected by
+[wo2ni/Oxygen-Cursors](https://github.com/wo2ni/Oxygen-Cursors)) recoloured to this
+rice's icon colours: one per folder colour of the
+[Cosmic-Noir](https://github.com/atraxsrc/cosmic-icon-themes) icon pack, **Orange**, **Sage**, **Dark**.
+All patched so they work in COSMIC's own apps.
 
-| Preview | Body | Contrast on `#171717` | Goes with |
-| ------- | ---- | --------------------- | --------- |
-| ![](../assets/cursors/Oxygen-02-Vibrant-Orange.png) | `#CE5C00` | 4.4:1 | The orange accent and terminal cursor |
+| Variant | Preview | Body | Contrast on `#171717` | Goes with |
+| ------- | ------- | ---- | ------------------- | --------- |
+| **Orange** (default) | ![](../assets/cursors/Oxygen-Noir-Orange.png) | `#F25623` | 5.2:1 | Orange folders |
+| **Sage** | ![](../assets/cursors/Oxygen-Noir-Sage.png) | `#88A57D` | 6.6:1 | Sage folders |
+| **Dark** | ![](../assets/cursors/Oxygen-Noir-Dark.png) | `#2A2A2A` | 1.2:1 | Dark folders |
 
-The theme is a normal folder here (`Oxygen-02-Vibrant-Orange/index.theme` + `cursors/`),
+Each variant is a normal folder here (`Oxygen-Noir-<Variant>/index.theme` + `cursors/`),
 already fixed for COSMIC. Nothing is downloaded at install time.
 
-Want another colour? Grab it from [wo2ni/Oxygen-Cursors](https://github.com/wo2ni/Oxygen-Cursors)
-and add the symlinks listed under [Why the symlinks](#why-the-symlinks).
+The colours are made with [`recolour.py`](https://github.com/atraxsrc/cosmic-darkgold-theme/blob/master/cursors/recolour.py) from cosmic-darkgold-theme: every body pixel keeps
+its shading and takes the hue and saturation of the target colour, the white border,
+black outline and shadow stay as they are, and the COSMIC symlinks are carried over.
+Any coloured variant works as the base. To add a colour:
+
+```bash
+../cosmic-darkgold-theme/cursors/recolour.py --base cursors/Oxygen-Noir-Orange \
+  --out cursors/Oxygen-Noir-Teal --name "Oxygen Noir Teal" --colour '#2F8F8F' \
+  --preview assets/cursors/Oxygen-Noir-Teal.png --bg '#171717'
+```
+
+then add `Teal` to `VARIANTS` in `install.sh` and `uninstall.sh`.
 
 ## Install
 
 COSMIC has no cursor picker yet, so the script sets it.
 
 ```bash
-./cursors/install.sh
+./cursors/install.sh                      # Orange
+./cursors/install.sh --variant Sage      # another colour, see --list
 reboot
 ```
 
@@ -26,21 +42,23 @@ Options:
 
 | Option | Effect |
 | ------ | ------ |
+| `--variant NAME` | Which colour, default `Orange`; `--list` prints them |
 | `--user` | Theme goes to `~/.local/share/icons` instead of `/usr/share/icons` (no sudo for the files; `/etc/environment` still needs it) |
 | `--size N` | Cursor size, default 24 (`XCURSOR_SIZE_OVERRIDE=N` works too) |
 
-What it does:
+What it does, with `<Theme>` the chosen `Oxygen-Noir-<Variant>`:
 
 | Step | Where | Why |
 | ---- | ----- | --- |
-| Copy the theme | `/usr/share/icons/Oxygen-02-Vibrant-Orange` | An older, different copy is moved to `.Oxygen-02-Vibrant-Orange.bak-<timestamp>` |
+| Copy the theme | `/usr/share/icons/<Theme>` | An older, different copy is moved to `.<Theme>.bak-<timestamp>` |
 | `XCURSOR_THEME` / `XCURSOR_SIZE` | `/etc/environment` | `cosmic-comp` reads these at login |
-| `Inherits=Oxygen-02-Vibrant-Orange` | `~/.icons/default/index.theme` | X11 / XWayland apps |
+| `Inherits=<Theme>` | `~/.icons/default/index.theme` | X11 / XWayland apps |
 | `cursor-theme` / `cursor-size` | gsettings | GTK apps |
 | `flatpak override --user --env=…` | Flatpak | Sandboxed apps don't see `/etc/environment` |
 
 Every config file it changes gets a `.bak-<timestamp>` copy first. Running it again
-changes nothing. The compositor only reads the cursor at startup, so a reboot (or
+changes nothing. Switching variants is just running it again with another
+`--variant`. The compositor only reads the cursor at startup, so a reboot (or
 log out and back in) is required.
 
 ## Uninstall
@@ -50,9 +68,10 @@ log out and back in) is required.
 reboot
 ```
 
-It checks both `/usr/share/icons` and `~/.local/share/icons`. Settings are only
-reset when this theme is the active one; `/etc/environment` and
-`~/.icons/default/index.theme` get a `.bak-<timestamp>` copy first.
+It removes every `Oxygen-Noir-*` variant from both `/usr/share/icons` and
+`~/.local/share/icons`. Settings are only reset when one of them is the active
+cursor; `/etc/environment` and `~/.icons/default/index.theme` get a
+`.bak-<timestamp>` copy first.
 
 ## Why the symlinks
 
@@ -96,8 +115,9 @@ compositor got the variable. With `--user`, look in `~/.local/share/icons` inste
 
 - Cursor artwork: the original **Oxygen** cursor designs from the
   [KDE Oxygen project](https://invent.kde.org/plasma/oxygen), in the colour
-  variant collected by [**wo2ni/Oxygen-Cursors**](https://github.com/wo2ni/Oxygen-Cursors).
-- This repo only adds the COSMIC symlinks and the scripts.
-- The upstream repo has **no LICENSE file**, so the licence of this variant is
+  variants collected by [**wo2ni/Oxygen-Cursors**](https://github.com/wo2ni/Oxygen-Cursors).
+- This repo recolours them to the Noir palette with [`recolour.py`](https://github.com/atraxsrc/cosmic-darkgold-theme/blob/master/cursors/recolour.py) from cosmic-darkgold-theme
+  and adds the COSMIC symlinks and the scripts.
+- The upstream repo has **no LICENSE file**, so the licence of the artwork is
   not stated there. The MIT licence of this repo does not cover the cursor files;
   they keep whatever terms KDE's Oxygen artwork carries.

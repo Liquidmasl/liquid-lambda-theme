@@ -62,7 +62,7 @@ is khaki. Errors are told apart by bold and underline.
 ├── cosmic-term
 │   └── Noir-term.ron            # COSMIC Terminal colour scheme
 ├── cursors
-│   ├── Oxygen-02-Vibrant-Orange/ # cursor theme, patched for COSMIC apps
+│   ├── Oxygen-Noir-*/            # cursor themes, one per icon colour, patched for COSMIC apps
 │   ├── install.sh
 │   ├── uninstall.sh
 │   └── README.md
@@ -182,15 +182,17 @@ Fully quit Firefox afterward. Details and CSS rules: [`firefox/README.md`](firef
 
 ## Cursor
 
-**Oxygen-02-Vibrant-Orange**, patched with the cursor names COSMIC apps ask
-for. COSMIC has no cursor picker yet, so the script sets it:
+**Oxygen** cursors recoloured to the icon colours, one per folder colour of the
+Cosmic-Noir icon pack: **Orange** (default), **Sage**, **Dark**. Patched with the cursor
+names COSMIC apps ask for. COSMIC has no cursor picker yet, so the script sets it:
 
 ```bash
-./cursors/install.sh
+./cursors/install.sh                      # Orange
+./cursors/install.sh --variant Sage      # or another, see --list
 reboot
 ```
 
-Why the patch, what the script touches and how to undo it:
+Previews, what the script touches, how to undo it and how the colours are made:
 [`cursors/README.md`](cursors/README.md).
 
 ---
@@ -365,7 +367,9 @@ cd cosmic-noir-theme
 ./firefox/install.sh
 
 # cursor (then reboot), see cursors/README.md
-./cursors/install.sh
+./cursors/install.sh                      # Orange
+./cursors/install.sh --variant Sage      # or another, see --list
+reboot
 
 # shell + terminal tools (see Terminal extras above)
 ./zsh/install.sh
@@ -396,7 +400,7 @@ mkdir -p ~/.config/btop/themes && cp btop/Noir.theme ~/.config/btop/themes/
 | [fastfetch](https://github.com/fastfetch-cli/fastfetch) | System info |
 | [btop](https://github.com/aristocratos/btop) | Resource monitor |
 | [cosmic-icon-themes](https://github.com/atraxsrc/cosmic-icon-themes) | Icon pack (Cosmic-Noir), recolored from [Kanagawa icons](https://github.com/Fausto-Korpsvart/Kanagawa-GKT-Theme/tree/main/icons/Kanagawa) |
-| [Oxygen-Cursors](https://github.com/wo2ni/Oxygen-Cursors) | Cursor (vibrant orange) |
+| [Oxygen-Cursors](https://github.com/wo2ni/Oxygen-Cursors) | Cursor, recoloured to the icon colours |
 
 ## Credits
 
