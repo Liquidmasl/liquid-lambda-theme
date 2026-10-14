@@ -95,7 +95,7 @@ is khaki. Errors are told apart by bold and underline.
 │   ├── cursors/                 # cursor preview
 │   ├── cosmic-term/             # scheme previews for cosmic-term/README.md
 │   ├── screenshot.png           # README screenshot
-│   └── wallpaper.png            # the sushi switch on the bare desktop
+│   └── wallpaper.png            # the anime portrait on the bare desktop
 ├── backgrounds/                 # wallpapers, noir-<subject>.png (see Icons and wallpaper)
 ├── docs
 │   └── showcase.md              # the rice describing itself, for the Postilla pane of the screenshot
@@ -326,7 +326,7 @@ the thirteen subjects every dark rice has, rendered in sage and orange on charco
 the Harbor Dark reaper and Hyundai blueprint, the COSMIC astronaut, the samurai,
 sushi switch, geisha, JS mug and neon street from the Tokyo Night set, The Greek
 eagle and ink portrait, and three new scenes: city, panel and tower.
-The sushi switch is the one in the screenshot.
+The anime portrait (`noir-anime.png`) is the one in the screenshot.
 The subjects come from [HANCORE-linux](https://github.com/HANCORE-linux) (MIT) and
 [cool-wallpapers](https://github.com/atraxsrc/cool-wallpapers); each was rendered again in this palette, then upscaled.
 More from the upstream theme in cool-wallpapers, folder
@@ -334,7 +334,7 @@ More from the upstream theme in cool-wallpapers, folder
 
 Settings → Wallpaper → Add image → a file from `backgrounds/`, or one you downloaded.
 
-![The sushi switch wallpaper on the Noir desktop, panel only](assets/wallpaper.png)
+![The anime portrait wallpaper on the Noir desktop, panel only](assets/wallpaper.png)
 
 ---
 

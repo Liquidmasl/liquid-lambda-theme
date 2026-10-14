@@ -42,7 +42,7 @@ flowchart LR
 - [x] `./icons/install.sh` for the **Cosmic-Noir** icons, `./cosmic/install.sh` for fonts and the terminal look
 - [x] `./zsh/install.sh`, `./lsd/install.sh`, `./fastfetch/install.sh`
 - [x] Cursor: Oxygen-Noir-Orange
-- [x] Wallpaper: `backgrounds/noir-sushi-switch.png`
+- [x] Wallpaper: `backgrounds/noir-anime.png`
 - [x] Screenshot for the README
 
 ## The baseline every rice shares
