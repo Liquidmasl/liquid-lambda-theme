@@ -1,6 +1,6 @@
 (
     family: "Maple Normal UI",
-    weight: Normal,
+    weight: Light,
     stretch: Normal,
     style: Normal,
 )

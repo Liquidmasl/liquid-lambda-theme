@@ -132,7 +132,7 @@ per-rice files.
 
 | Where | Setting |
 |-------|---------|
-| Fonts | Interface `Maple Normal UI`, monospace `Maple Mono Normal NFM` |
+| Fonts | Interface `Maple Normal UI` Light, monospace `Maple Mono Normal NFM` |
 | Icons | Cosmic-Noir-Orange |
 | Windows | Minimize / maximize buttons hidden, theme applied to GNOME apps |
 | Terminal | Maple Mono 15 (weights 500 / bold 800 / dim 300), 77% opacity, no header bar, Noir |
@@ -145,6 +145,12 @@ Cosmic-Noir icons (see Icons below) and import the terminal scheme first, then:
 ```
 
 It backs up each file it replaces to `*.bak` and COSMIC applies it live.
+
+The interface font is the Light weight on purpose. COSMIC sets interface text
+brightness itself (the text tint only picks the hue), so on these dark panels
+labels land near `#DFE7DF` whatever tint you choose; the thinner strokes are
+what calms them at night. Settings → Fonts lists only families, so the weight
+lives in `cosmic/config/com.system76.CosmicTk/v1/interface_font`.
 
 ---
 
