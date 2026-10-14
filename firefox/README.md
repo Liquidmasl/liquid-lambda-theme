@@ -60,9 +60,9 @@ line clear 3:1.
 | `#222222` | Toolbar, menus                              |
 | `#3A3B3A` | URL bar field, button hover, sidebar border |
 | `#CCD0CF` | Body text                                   |
-| `#959C95` | Inactive tab text, menu border              |
-| `#88A57D` | Icons                                       |
-| `#F25623` | Focused URL bar ring and text selection, tab line, pressed button, menu and sidebar selection, loading, attention |
+| `#959C95` | Menu border                                 |
+| `#88A57D` | Icons, inactive tab text                    |
+| `#F25623` | Focused tab text, focused URL bar ring and text selection, tab line, pressed button, menu and sidebar selection, loading, attention |
 
 Build the package:
 
