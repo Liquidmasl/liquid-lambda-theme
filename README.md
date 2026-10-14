@@ -215,7 +215,7 @@ Previews, what the script touches, how to undo it and how the colours are made:
 ### `update_system.sh`
 
 nala + flatpak updater. Headers in orange, info in grey-sage, success in sage,
-errors in orange; the banner ramps from khaki to orange.
+errors in orange; the banner ramps from sage to fog, orange only in the rule below it.
 
 ```bash
 chmod +x scripts/update_system.sh
@@ -376,6 +376,44 @@ mkdir -p ~/.config/btop/themes && cp btop/Noir.theme ~/.config/btop/themes/
 # fonts, icons, terminal look from cosmic/config/
 ./cosmic/install.sh
 ```
+
+---
+
+## Switching rice
+
+The installers replace what they own (with a `*.bak` copy), but three things
+pile up instead of being replaced: shell layers in `~/.zshrc`, LazyVim specs and
+the updater link. Coming to Noir from another rice:
+
+1. **Desktop, terminal, Firefox, cursor, icons:** run [Setup](#setup) as usual.
+   Disable the old rice's Firefox add-on before enabling this one.
+2. **zsh:** `./zsh/install.sh` adds a Noir `source` line but leaves the old one.
+   In `~/.zshrc` keep exactly one rice line active, at the end. Comment out any
+   `ricing/zsh/colors.zsh` line too (cosmic-ricing re-adds it when it applies a theme).
+3. **Neovim:** LazyVim loads every spec in `lua/plugins/`, and the last one that
+   sets a colorscheme wins, so an old rice's spec can override Noir. Park the
+   others outside `lua/plugins/`:
+
+   ```bash
+   mkdir -p ~/.config/nvim/rice-off
+   cd ~/.config/nvim/lua/plugins && ls     # anything besides noir.lua and your own specs?
+   mv darkgold.lua ~/.config/nvim/rice-off/   # once per old rice spec
+   ```
+
+   Then `:Lazy clean` removes plugins only those specs used. Files in `colors/`
+   can stay; they do nothing until a spec selects them.
+4. **Updater:** point `~/update_system.sh` at this rice's script:
+
+   ```bash
+   ln -sfn "$PWD/scripts/update_system.sh" ~/update_system.sh
+   ```
+
+5. **btop:** Esc → Options → Color theme → Noir.
+6. `exec zsh`, restart Neovim and Firefox, reboot for the cursor.
+
+Leaving Noir is the same list in reverse: the next rice's Setup, then swap the
+zsh line, the LazyVim spec and the updater link. `./cursors/uninstall.sh` puts
+the Pop cursor back.
 
 ---
 
