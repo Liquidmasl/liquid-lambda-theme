@@ -14,8 +14,8 @@ set -eo pipefail
 # and work correctly with both echo -e and printf "%s"
 EDGE=$'\033[38;2;242;86;35m'      # #F25623  - section headers, logo rule (orange)
 CONTROL=$'\033[38;2;149;156;149m'    # #959C95  - info / commands (grey-sage)
-HIGH=$'\033[38;2;136;165;125m'      # #88A57D  - success (sage)
-ACCENT=$'\033[38;2;245;110;15m'    # #F56E0F  - warnings, logo rule (ember)
+HIGH=$'\033[38;2;136;165;125m'      # #88A57D  - success, logo rule (sage)
+ACCENT=$'\033[38;2;245;110;15m'    # #F56E0F  - warnings (ember)
 MUTE=$'\033[38;2;125;131;125m'      # #7D837D  - skipped (muted)
 HIGHER=$'\033[38;2;242;86;35m'    # #F25623  - errors (orange)
 DIM=$'\033[38;2;104;108;105m'      # #686C69  - comments / dim text
@@ -135,17 +135,19 @@ LOGO_ROWS=(
     ' ╚═════╝ ╚═╝  ╚═╝╚═════╝ ╚══════╝  ╚═══╝   ╚═╝'
 )
 
-# Per-column colours for the banner: khaki → orange, left to right, on the
-# charcoal terminal. One entry per column, 46 total.
+# Per-column colours for the banner: khaki #AEAB94 to orange #F25623, left to
+# right, blended in Oklch so the middle passes through sand and amber. A plain
+# RGB blend from a grey-ish khaki to orange goes through a dusty salmon pink.
+# One entry per column, 46 total.
 LOGO_GRAD=(
-    "174;171;148" "176;169;145" "177;167;143" "179;165;140" "180;163;138" "182;162;135"
-    "183;160;133" "185;158;130" "186;156;128" "188;154;125" "189;152;123" "191;150;120"
-    "192;148;118" "194;146;115" "195;145;113" "197;143;110" "198;141;108" "200;139;105"
-    "201;137;103" "203;135;100" "204;133;98" "206;131;95" "207;129;93" "209;128;90"
-    "210;126;88" "212;124;85" "213;122;83" "215;120;80" "216;118;78" "218;116;75"
-    "219;114;73" "221;112;70" "222;111;68" "224;109;65" "225;107;63" "227;105;60"
-    "228;103;58" "230;101;55" "231;99;53" "233;97;50" "234;95;48" "236;94;45"
-    "237;92;43" "239;90;40" "240;88;38" "242;86;35"
+    "174;171;148" "175;170;145" "175;170;141" "176;169;138" "177;168;135" "178;167;131"
+    "179;166;128" "180;165;124" "181;164;121" "182;163;117" "183;162;114" "185;161;110"
+    "186;160;107" "188;158;103" "189;157;99" "191;156;96" "193;154;92" "194;153;89"
+    "196;151;85" "198;150;82" "200;148;78" "202;146;75" "203;144;71" "205;142;68"
+    "207;141;64" "209;139;61" "211;137;57" "213;135;54" "214;132;51" "216;130;48"
+    "218;128;45" "220;126;42" "222;123;39" "223;121;37" "225;118;34" "227;116;32"
+    "229;113;31" "230;110;29" "232;108;28" "233;105;28" "235;102;28" "236;99;29"
+    "238;96;30" "239;93;31" "241;89;33" "242;86;35"
 )
 
 # Draw the banner one character at a time, colouring by column index so the
@@ -174,7 +176,7 @@ print_logo() {
     done
 
     echo
-    printf "  ${ACCENT}━━━━━━━━━━━━━━━━━━━━━━━${EDGE}━━━━━━━━━━━━━━━━━━━━━━━${RESET}\n"
+    printf "  ${EDGE}━━━━━━━━━━━━━━━━━━━━━━━${HIGH}━━━━━━━━━━━━━━━━━━━━━━━${RESET}\n"
     printf "  ${DIM}  Pop!_OS · COSMIC DE · System Update${RESET}\n"
     printf "  ${DIM}  %s${RESET}\n" "$(date '+%A %d %B %Y  %H:%M:%S')"
     echo
