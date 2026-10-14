@@ -58,7 +58,7 @@
     bg_color: Some("#171717FF"),
     primary_container_bg: Some("#222222FF"),
     secondary_container_bg: Some("#2A2A2AFF"),
-    text_tint: Some("#CCD0CFFF"),
+    text_tint: Some("#88A57DFF"),
     accent: Some("#F25623FF"),
     success: Some("#88A57DFF"),
     warning: Some("#F56E0FFF"),
