@@ -3,7 +3,7 @@
    Ported from the DarkGold baseline, recoloured for the COSMIC Noir palette
 
    Colors from Noir:
-     bg #171717  elevated #222222  menu text #AEAB94 (khaki)  bright #DADEDD
+     bg #171717  elevated #222222  menu text #88A57D (sage)  bright #DADEDD
      orange #F25623  border #3A3B3A
      hover #412A22  pressed #502D22  (orange tinted into the panel)
 
@@ -54,7 +54,7 @@ toolbarbutton .toolbarbutton-icon {
 #customizationui-widget-multiview,
 menupopup {
   --panel-background: #222222 !important;
-  --panel-color: #AEAB94 !important;
+  --panel-color: #88A57D !important;
   --panel-border-color: #3A3B3A !important;
   --panel-border-radius: 10px !important;
   --panel-separator-color: #3A3B3A !important;
@@ -62,14 +62,14 @@ menupopup {
   --panel-item-active-bgcolor: #502D22 !important;
 
   --arrowpanel-background: #222222 !important;
-  --arrowpanel-color: #AEAB94 !important;
+  --arrowpanel-color: #88A57D !important;
   --arrowpanel-border-color: #3A3B3A !important;
   --arrowpanel-dimmed: #412A22 !important;
   --arrowpanel-dimmed-further: #502D22 !important;
 
   /* newer Firefox panel vars (v140+) */
   --panel-background-color: #222222 !important;
-  --panel-text-color: #AEAB94 !important;
+  --panel-text-color: #88A57D !important;
 }
 
 /* Firefox's own accent (Sign in button, toggles, focus rings) inside the

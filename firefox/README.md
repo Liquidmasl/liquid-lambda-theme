@@ -15,9 +15,8 @@ Stylesheets:
 | `#502D22` | Menu pressed row          |
 | `#3A3B3A` | Separators, menu border   |
 | `#F25623` | Accent, URL bar border, hover rail |
-| `#88A57D` | New tab accent, active    |
+| `#88A57D` | Menu text, new tab accent, active |
 | `#959C95` | Links                     |
-| `#AEAB94` | Menu text (khaki, where DarkGold uses cream) |
 | `#DADEDD` | Hover text                |
 
 ## Structure
