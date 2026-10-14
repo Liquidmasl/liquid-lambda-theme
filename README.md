@@ -60,7 +60,9 @@ is khaki. Errors are told apart by bold and underline.
 │   ├── config/                  # baseline settings: fonts, icons, terminal look
 │   └── install.sh
 ├── cosmic-term
-│   └── Noir-term.ron            # COSMIC Terminal colour scheme
+│   ├── Noir-term.ron            # COSMIC Terminal colour scheme
+│   ├── Noir-term-*.ron          # dimmer plain-text variants, same ANSI colours
+│   └── README.md                # previews and which one to pick
 ├── cursors
 │   ├── Oxygen-Noir-*/            # cursor themes, one per icon colour, patched for COSMIC apps
 │   ├── install.sh
@@ -91,6 +93,7 @@ is khaki. Errors are told apart by bold and underline.
 │   └── install.sh
 ├── assets
 │   ├── cursors/                 # cursor preview
+│   ├── cosmic-term/             # scheme previews for cosmic-term/README.md
 │   ├── screenshot.png           # README screenshot
 │   └── wallpaper.png            # the sushi switch on the bare desktop
 ├── backgrounds/                 # wallpapers, noir-<subject>.png (see Icons and wallpaper)
@@ -158,6 +161,10 @@ dropdown will look like it did nothing.
 
 Fog text on charcoal; orange for errors and the cursor, sage for strings and
 success, khaki in the yellow slot, grey-sage for directories.
+
+If fog glares at night, there are five dimmer variants with the same ANSI
+colours, from Smoke `#7D837D` up to Pale `#BCBFBC`. Previews and which to
+pick: [`cosmic-term/README.md`](cosmic-term/README.md).
 
 ---
 
