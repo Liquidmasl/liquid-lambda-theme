@@ -15,6 +15,11 @@ Every scheme here keeps the 16 ANSI colours of Noir. Only the plain text
 colour and the dim text change, so bat, lsd, starship, nala and btop look the
 same whichever one you pick. The cursor stays orange `#F25623`.
 
+The `blue` slot is ember `#F56E0F` (bright the same, dim `#B85A1A`), so
+nala's `Updated:` and `Downloaded:` labels stand out next to the sage
+`No Change:`, the way DarkGold's salmon `blue` does. Directories are not
+affected: `LS_COLORS` in `zsh/noir.zsh` colours them in truecolor.
+
 ## Which one
 
 Fog `#CCD0CF` is the default and the brightest. At night it can glare, so the
@@ -24,7 +29,7 @@ easier to read for long stretches; higher is calmer.
 | Scheme | Plain text | Contrast | Also used for |
 |--------|------------|----------|---------------|
 | Noir Smoke | `#7D837D` | 4.6:1 | muted text, close to the `cyan` slot |
-| Noir Sage Grey | `#959C95` | 6.4:1 | directories, the `blue` slot |
+| Noir Sage Grey | `#959C95` | 6.4:1 | directories (`LS_COLORS`) |
 | Noir Khaki | `#AEAB94` | 7.7:1 | menu text, the `yellow` slot |
 | Noir Ash | `#A9AFA9` | 8.0:1 | none, halfway between grey-sage and pale |
 | Noir Pale | `#BCBFBC` | 9.7:1 | the `white` slot |
