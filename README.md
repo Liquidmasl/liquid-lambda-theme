@@ -55,6 +55,9 @@ is khaki. Errors are told apart by bold and underline.
 .
 ├── btop
 │   └── Noir.theme               # btop colour theme
+├── claude-desktop
+│   ├── cosmic-noir.jsonc        # Claude Desktop theme (claude-desktop-extra), dark + light
+│   └── install.sh
 ├── cosmic
 │   ├── Noir.ron                 # COSMIC Appearance import (Dark)
 │   ├── config/                  # baseline settings: fonts, icons, terminal look
@@ -190,6 +193,27 @@ Two layers:
 ```
 
 Fully quit Firefox afterward. Details and CSS rules: [`firefox/README.md`](firefox/README.md).
+
+---
+
+## Claude Desktop
+
+For the unofficial [claude-desktop-extra](https://github.com/patrickjaja/claude-desktop-extra)
+Linux build. `claude-desktop/cosmic-noir.jsonc` is one theme with both halves:
+Noir in dark mode and Dossier in light mode, so Claude's own
+Settings → Appearance toggle switches between the two rices.
+Colours come from `cosmic/*.ron`, contrast-checked (text and button text
+4.5:1, accents 3:1).
+
+```bash
+./claude-desktop/install.sh
+```
+
+It copies the file into `~/.config/Claude/themes.d/`. Then press
+<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>T</kbd> in Claude Desktop and pick **cosmic-noir**.
+
+The same file ships in [`cosmic-dossier-theme`](https://github.com/atraxsrc/cosmic-dossier-theme),
+so installing from either repo gives the same theme.
 
 ---
 
@@ -355,6 +379,9 @@ cd cosmic-noir-theme
 
 # optional extra chrome
 ./firefox/install.sh
+
+# claude desktop (claude-desktop-extra), then Ctrl+Shift+T
+./claude-desktop/install.sh
 
 # cursor (then reboot), see cursors/README.md
 ./cursors/install.sh                      # Orange
