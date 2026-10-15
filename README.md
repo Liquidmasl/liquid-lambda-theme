@@ -90,7 +90,8 @@ is khaki. Errors are told apart by bold and underline.
 │   └── install.sh
 ├── nvim                         # Neovim colorscheme, LazyVim spec, RON syntax, install.sh
 ├── scripts
-│   └── update_system.sh         # nala + flatpak, orange / sage ANSI
+│   ├── update_system.sh         # nala + flatpak, orange / sage ANSI
+│   └── switch.sh                # make this the active rice (see Switching rice)
 ├── zsh
 │   ├── noir.zsh                 # LS_COLORS, highlighting colours, aliases, starship
 │   └── install.sh
@@ -244,6 +245,15 @@ errors in orange; the banner ramps from sage to fog, orange only in the rule bel
 ```bash
 chmod +x scripts/update_system.sh
 ./scripts/update_system.sh
+```
+
+### `switch.sh`
+
+Makes this the active rice, coming from any other `cosmic-*-theme` rice. See
+[Switching rice](#switching-rice).
+
+```bash
+./scripts/switch.sh
 ```
 
 ---
@@ -408,39 +418,52 @@ mkdir -p ~/.config/btop/themes && cp btop/Noir.theme ~/.config/btop/themes/
 
 ## Switching rice
 
-The installers replace what they own (with a `*.bak` copy), but three things
-pile up instead of being replaced: shell layers in `~/.zshrc`, LazyVim specs and
-the updater link. Coming to Noir from another rice:
+The installers replace what they own (with a `*.bak` copy), but some things
+pile up instead: shell layers in `~/.zshrc`, LazyVim specs, the updater link and
+btop's theme setting. `scripts/switch.sh` makes Noir the active rice, coming
+from any other `cosmic-*-theme` rice, and tidies those up. Every rice repo ships
+the same script.
 
-1. **Desktop, terminal, Firefox, cursor, icons:** run [Setup](#setup) as usual.
-   Disable the old rice's Firefox add-on before enabling this one.
-2. **zsh:** `./zsh/install.sh` adds a Noir `source` line but leaves the old one.
-   In `~/.zshrc` keep exactly one rice line active, at the end. Comment out any
-   `ricing/zsh/colors.zsh` line too (cosmic-ricing re-adds it when it applies a theme).
-3. **Neovim:** LazyVim loads every spec in `lua/plugins/`, and the last one that
-   sets a colorscheme wins, so an old rice's spec can override Noir. Park the
-   others outside `lua/plugins/`:
+```bash
+./scripts/switch.sh               # switch, icons included
+./scripts/switch.sh --keep-icons  # leave the current icon theme alone
+```
 
-   ```bash
-   mkdir -p ~/.config/nvim/rice-off
-   cd ~/.config/nvim/lua/plugins && ls     # anything besides noir.lua and your own specs?
-   mv darkgold.lua ~/.config/nvim/rice-off/   # once per old rice spec
-   ```
+It backs up every file it replaces, then:
 
-   Then `:Lazy clean` removes plugins only those specs used. Files in `colors/`
-   can stay; they do nothing until a spec selects them.
-4. **Updater:** point `~/update_system.sh` at this rice's script:
+- copies `cosmic/config/` (fonts, terminal look, icons) and turns dark mode on.
+  The terminal scheme and icon theme are only replaced when the current one is
+  not already a Noir variant, so a dimmer text variant or another icon colour
+  survives. Icons stay as they are until `./icons/install.sh` has run.
+- runs the fastfetch, lsd, Neovim and Claude Desktop installers and sets
+  btop's `color_theme`
+- moves every other rice's LazyVim spec from `~/.config/nvim/lua/plugins/` to
+  `~/.config/nvim/rice-off/` (LazyVim loads every spec there and the last
+  colorscheme wins); your own specs stay
+- comments out every other rice's `source` line in `~/.zshrc`, and
+  cosmic-ricing's `ricing/zsh/colors.zsh`, then uncomments Noir's or adds it
+- points `~/update_system.sh` at this repo's updater
+- installs the Firefox userChrome / userContent
 
-   ```bash
-   ln -sfn "$PWD/scripts/update_system.sh" ~/update_system.sh
-   ```
+The GUI steps it cannot do are printed at the end:
 
-5. **btop:** Esc → Options → Color theme → Noir.
-6. `exec zsh`, restart Neovim and Firefox, reboot for the cursor.
+1. Settings → Desktop → Appearance → Dark → Import `cosmic/Noir.ron`
+2. COSMIC Terminal → View → Color schemes → Dark tab → Import `cosmic-term/Noir-term.ron`
+3. Firefox: disable the old rice's add-on, enable [this one](https://addons.mozilla.org/en-US/firefox/addon/cosmic-noir-theme/), restart Firefox
+4. Settings → Wallpaper → a file from `backgrounds/`
+5. Claude Desktop: Ctrl+Shift+T → `cosmic-noir`, Appearance → Dark
+6. `exec zsh`, restart Neovim (`:Lazy clean` drops plugins only the old specs used)
 
-Leaving Noir is the same list in reverse: the next rice's Setup, then swap the
-zsh line, the LazyVim spec and the updater link. `./cursors/uninstall.sh` puts
-the Pop cursor back.
+Skip 1 and 2 when that slot already holds Noir. The first time on this rice,
+run [Setup](#setup) once for the fonts, icons and cursor.
+
+**Within the pair** (Noir ↔ [Dossier](https://github.com/atraxsrc/cosmic-dossier-theme)): the two halves
+sit side by side in COSMIC's Dark and Light slots and share one Claude Desktop
+theme, so after the first time only the Firefox add-on and the wallpaper are
+left by hand. Add `--keep-icons` to keep one icon colour across the pair.
+
+Leaving Noir is the next rice's `./scripts/switch.sh`. `./cursors/uninstall.sh`
+puts the Pop cursor back.
 
 ---
 
