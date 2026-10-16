@@ -247,6 +247,9 @@ background is plain charcoal; to put a wallpaper behind the chat instead
 Built against Telegram Desktop 7.3.1. Calls, group calls, statistics charts and
 premium badges keep Telegram's own colours.
 
+Telegram has no dark / light pairing, so Dossier, the light half, ships its own
+theme.
+
 ---
 
 ## Cursor

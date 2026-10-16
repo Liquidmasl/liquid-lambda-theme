@@ -1,14 +1,16 @@
 #!/usr/bin/env bash
-# Build cosmic-noir.tdesktop-theme for Telegram Desktop: a zip of
+# Build telegram/<NAME>.tdesktop-theme for Telegram Desktop: a zip of
 # colors.tdesktop-theme plus the chat background. The default background is
-# plain charcoal; --wallpaper puts one of backgrounds/*.png behind the chat,
+# the theme's windowBg; --wallpaper puts one of backgrounds/*.png behind the chat,
 # re-encoded to a 2560px JPEG (ImageMagick) to stay under Telegram's 5 MB limit.
 #   ./telegram/build.sh
 #   ./telegram/build.sh --wallpaper backgrounds/noir-anime.png
 set -euo pipefail
 
+NAME="cosmic-noir"                  # the only line that differs between rices
+
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-OUT="$DIR/cosmic-noir.tdesktop-theme"
+OUT="$DIR/$NAME.tdesktop-theme"
 WALLPAPER=""
 
 while [[ $# -gt 0 ]]; do
@@ -33,9 +35,10 @@ if [[ -n "$WALLPAPER" ]] && command -v convert >/dev/null 2>&1; then
 fi
 
 python3 -I - "$DIR/colors.tdesktop-theme" "$OUT" "$WALLPAPER" <<'EOF'
-import struct, sys, zipfile, zlib
+import re, struct, sys, zipfile, zlib
 
 colors, out, wallpaper = sys.argv[1:4]
+scheme = open(colors, "rb").read()
 
 def solid_png(rgb):
     def chunk(kind, data):
@@ -51,12 +54,13 @@ if wallpaper:
     name = "background.jpg" if wallpaper.lower().endswith((".jpg", ".jpeg")) else "background.png"
     background = open(wallpaper, "rb").read()
 else:
-    name, background = "background.png", solid_png((0x17, 0x17, 0x17))
+    bg = re.search(rb"^windowBg:\s*#([0-9a-fA-F]{6})", scheme, re.M).group(1).decode()
+    name, background = "background.png", solid_png(bytes.fromhex(bg))
 
 # fixed timestamps so a rebuild of the same input is byte-identical
 stamp = (2026, 1, 1, 0, 0, 0)
 with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as z:
-    for arcname, data in (("colors.tdesktop-theme", open(colors, "rb").read()), (name, background)):
+    for arcname, data in (("colors.tdesktop-theme", scheme), (name, background)):
         info = zipfile.ZipInfo(arcname, stamp)
         info.compress_type = zipfile.ZIP_DEFLATED
         info.external_attr = 0o644 << 16
@@ -71,4 +75,4 @@ fi
 echo "  built $OUT"
 echo
 echo "In Telegram Desktop: Settings -> Chat Settings -> Chat wallpaper ->"
-echo "Choose from file -> pick cosmic-noir.tdesktop-theme -> Apply this theme."
+echo "Choose from file -> pick $NAME.tdesktop-theme -> Apply this theme."
