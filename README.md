@@ -89,6 +89,10 @@ is khaki. Errors are told apart by bold and underline.
 │   ├── colors.yaml              # permission / size / date / git columns
 │   └── install.sh
 ├── nvim                         # Neovim colorscheme, LazyVim spec, RON syntax, install.sh
+├── telegram
+│   ├── colors.tdesktop-theme    # Telegram Desktop colour scheme (source)
+│   ├── cosmic-noir.tdesktop-theme  # built theme, open this in Telegram
+│   └── build.sh                 # rebuilds it, optionally with a wallpaper
 ├── scripts
 │   ├── update_system.sh         # nala + flatpak, orange / sage ANSI
 │   └── switch.sh                # make this the active rice (see Switching rice)
@@ -215,6 +219,33 @@ It copies the file into `~/.config/Claude/themes.d/`. Then press
 
 The same file ships in [`cosmic-dossier-theme`](https://github.com/atraxsrc/cosmic-dossier-theme),
 so installing from either repo gives the same theme.
+
+---
+
+## Telegram
+
+`telegram/cosmic-noir.tdesktop-theme` is a Telegram Desktop theme: charcoal
+chat list and background, soot incoming and dark-sage outgoing bubbles, orange
+for the accent, links, unread badges and buttons (with charcoal text on them),
+sage for online status and read ticks. Group member names cycle through eight
+of the rice's colours: orange, sage, khaki, grey-sage, pale khaki, amber, light
+sage and ember. Text and badge colours are contrast-checked at 4.5:1 or better,
+except disabled menu items.
+
+Settings → Chat Settings → Chat wallpaper → **Choose from file** →
+`telegram/cosmic-noir.tdesktop-theme` → **Apply this theme**.
+
+The colours live in `telegram/colors.tdesktop-theme`, which is plain text;
+`build.sh` zips it with the chat background into the `.tdesktop-theme`. The
+background is plain charcoal; to put a wallpaper behind the chat instead
+(ImageMagick re-encodes it to a 2560px JPEG, Telegram caps theme files at 5 MB):
+
+```bash
+./telegram/build.sh --wallpaper backgrounds/noir-anime.png
+```
+
+Built against Telegram Desktop 7.3.1. Calls, group calls, statistics charts and
+premium badges keep Telegram's own colours.
 
 ---
 
@@ -392,6 +423,9 @@ cd cosmic-noir-theme
 
 # claude desktop (claude-desktop-extra), then Ctrl+Shift+T
 ./claude-desktop/install.sh
+
+# telegram desktop
+# Settings → Chat Settings → Chat wallpaper → Choose from file → telegram/cosmic-noir.tdesktop-theme
 
 # cursor (then reboot), see cursors/README.md
 ./cursors/install.sh                      # Orange
