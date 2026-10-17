@@ -94,7 +94,7 @@ is khaki. Errors are told apart by bold and underline.
 │   ├── cosmic-noir.tdesktop-theme  # built theme, open this in Telegram
 │   └── build.sh                 # rebuilds it, optionally with a wallpaper
 ├── vscode
-│   ├── themes/                  # Cursor / VS Code colour theme (cosmic-noir-color-theme.json)
+│   ├── themes/                  # Cursor / VS Code colour themes, Noir (dark) + Dossier (light)
 │   ├── package.json             # extension manifest
 │   ├── install.sh               # packs a .vsix, installs it with cursor --install-extension
 │   └── README.md
@@ -229,12 +229,14 @@ so installing from either repo gives the same theme.
 
 ## Cursor editor
 
-`vscode/` is a colour theme for [Cursor](https://cursor.com). It is a plain
-VS Code theme extension, so VS Code and VSCodium take it too. Code is coloured
-the way Neovim is in this rice; the workbench is charcoal with soot menus,
-hovers and inputs, orange on the active tab, buttons and menu highlight, and
-the integrated terminal uses the COSMIC Terminal scheme. Cursor builds its
-Agent and chat panels from the same theme colours, so they follow along.
+`vscode/` is a colour theme extension for [Cursor](https://cursor.com) with
+both halves of the pair: **Cosmic Noir** and **Cosmic Dossier**. It is a plain
+VS Code theme extension, so VS Code and VSCodium take it too, and the same
+folder ships in cosmic-dossier-theme. Code is coloured the way Neovim is in
+each rice; the workbench is charcoal with soot menus, hovers and inputs,
+orange on the active tab, buttons and menu highlight, and the integrated
+terminal uses the COSMIC Terminal scheme. Cursor builds its Agent and chat
+panels from the same theme colours, so they follow along.
 
 ```bash
 ./vscode/install.sh
@@ -243,8 +245,9 @@ Agent and chat panels from the same theme colours, so they follow along.
 It packs `vscode/` into a `.vsix` and installs it with
 `cursor --install-extension`; run it again after editing the theme. Then press
 <kbd>Ctrl</kbd>+<kbd>K</kbd> <kbd>Ctrl</kbd>+<kbd>T</kbd> in Cursor and pick
-**Cosmic Noir**. Colours, contrast and the VS Code variant:
-[`vscode/README.md`](vscode/README.md).
+**Cosmic Noir**. Three lines in Cursor's `settings.json` make it follow
+COSMIC's Dark / Light toggle between Noir and Dossier; they, the colours and
+the contrast notes are in [`vscode/README.md`](vscode/README.md).
 
 ---
 

@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# Install the Cosmic Noir colour theme into Cursor. Packs this folder into
+# Install this rice's colour themes into Cursor. Packs this folder into
 # vscode/<name>-<version>.vsix and installs it with the editor's own CLI, so it
 # shows up under Extensions and a re-run updates it in place.
 #   ./vscode/install.sh                # Cursor
 #   ./vscode/install.sh code codium    # VS Code / VSCodium instead (any CLI name works)
-# Then press Ctrl+K Ctrl+T in the editor and pick Cosmic Noir.
+# Then press Ctrl+K Ctrl+T in the editor and pick the theme (see vscode/README.md).
 set -euo pipefail
 
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -94,9 +94,23 @@ for cli in "${editors[@]}"; do
   fi
 done
 
+# the theme labels, dark first, for the closing hint
+mapfile -t labels < <(python3 -I -c '
+import json, sys
+for t in json.load(open(sys.argv[1]))["contributes"]["themes"]:
+    print(("dark" if t["uiTheme"] != "vs" else "light") + "\t" + t["label"])
+' "$DIR/package.json")
+
 echo
 if [[ $installed -eq 1 ]]; then
-  echo "Done. In the editor press Ctrl+K Ctrl+T and pick Cosmic Noir."
+  echo "Done. In the editor press Ctrl+K Ctrl+T and pick one of:"
+  for l in "${labels[@]}"; do echo "  ${l#*$'\t'} (${l%%$'\t'*})"; done
+  if [[ ${#labels[@]} -eq 2 ]]; then
+    echo "To follow COSMIC's Dark / Light toggle, add to Cursor's settings.json:"
+    echo "  \"window.autoDetectColorScheme\": true,"
+    echo "  \"workbench.preferredDarkColorTheme\": \"${labels[0]#*$'\t'}\","
+    echo "  \"workbench.preferredLightColorTheme\": \"${labels[1]#*$'\t'}\""
+  fi
 else
   echo "No editor CLI found. In the editor: Extensions -> ... menu -> Install from VSIX ->"
   echo "  $VSIX"
