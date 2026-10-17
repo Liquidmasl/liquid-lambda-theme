@@ -1,0 +1,39 @@
+{
+  "name": "cosmic-noir-theme",
+  "displayName": "Cosmic Noir",
+  "description": "Charcoal colour theme from the COSMIC Noir rice: grey-sage neutrals, sage strings, one loud orange accent.",
+  "version": "1.0.0",
+  "publisher": "atraxsrc",
+  "license": "MIT",
+  "icon": "icon.png",
+  "galleryBanner": {
+    "color": "#171717",
+    "theme": "dark"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/atraxsrc/cosmic-noir-theme"
+  },
+  "engines": {
+    "vscode": "^1.70.0"
+  },
+  "categories": [
+    "Themes"
+  ],
+  "keywords": [
+    "theme",
+    "dark",
+    "cosmic",
+    "noir",
+    "cursor"
+  ],
+  "contributes": {
+    "themes": [
+      {
+        "label": "Cosmic Noir",
+        "uiTheme": "vs-dark",
+        "path": "./themes/cosmic-noir-color-theme.json"
+      }
+    ]
+  }
+}

@@ -93,6 +93,11 @@ is khaki. Errors are told apart by bold and underline.
 │   ├── colors.tdesktop-theme    # Telegram Desktop colour scheme (source)
 │   ├── cosmic-noir.tdesktop-theme  # built theme, open this in Telegram
 │   └── build.sh                 # rebuilds it, optionally with a wallpaper
+├── vscode
+│   ├── themes/                  # Cursor / VS Code colour theme (cosmic-noir-color-theme.json)
+│   ├── package.json             # extension manifest
+│   ├── install.sh               # packs a .vsix, installs it with cursor --install-extension
+│   └── README.md
 ├── scripts
 │   ├── update_system.sh         # nala + flatpak, orange / sage ANSI
 │   └── switch.sh                # make this the active rice (see Switching rice)
@@ -219,6 +224,27 @@ It copies the file into `~/.config/Claude/themes.d/`. Then press
 
 The same file ships in [`cosmic-dossier-theme`](https://github.com/atraxsrc/cosmic-dossier-theme),
 so installing from either repo gives the same theme.
+
+---
+
+## Cursor editor
+
+`vscode/` is a colour theme for [Cursor](https://cursor.com). It is a plain
+VS Code theme extension, so VS Code and VSCodium take it too. Code is coloured
+the way Neovim is in this rice; the workbench is charcoal with soot menus,
+hovers and inputs, orange on the active tab, buttons and menu highlight, and
+the integrated terminal uses the COSMIC Terminal scheme. Cursor builds its
+Agent and chat panels from the same theme colours, so they follow along.
+
+```bash
+./vscode/install.sh
+```
+
+It packs `vscode/` into a `.vsix` and installs it with
+`cursor --install-extension`; run it again after editing the theme. Then press
+<kbd>Ctrl</kbd>+<kbd>K</kbd> <kbd>Ctrl</kbd>+<kbd>T</kbd> in Cursor and pick
+**Cosmic Noir**. Colours, contrast and the VS Code variant:
+[`vscode/README.md`](vscode/README.md).
 
 ---
 
@@ -426,6 +452,9 @@ cd cosmic-noir-theme
 
 # claude desktop (claude-desktop-extra), then Ctrl+Shift+T
 ./claude-desktop/install.sh
+
+# cursor editor, then Ctrl+K Ctrl+T → Cosmic Noir
+./vscode/install.sh
 
 # telegram desktop
 # Settings → Chat Settings → Chat wallpaper → Choose from file → telegram/cosmic-noir.tdesktop-theme
