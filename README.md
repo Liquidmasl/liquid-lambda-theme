@@ -68,6 +68,7 @@ is khaki. Errors are told apart by bold and underline.
 │   └── README.md                # previews and which one to pick
 ├── cursors
 │   ├── Oxygen-Noir-*/            # cursor themes, one per icon colour, patched for COSMIC apps
+│   ├── recolour.py              # makes a variant from any other, see cursors/README.md
 │   ├── install.sh
 │   ├── uninstall.sh
 │   └── README.md
