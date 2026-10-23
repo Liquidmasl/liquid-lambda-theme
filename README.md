@@ -3,7 +3,7 @@
 # COSMIC · Noir
 
 Pop!_OS 24.04 on COSMIC in charcoal, sage and orange: desktop, terminal,
-shell, Firefox, cursor, wallpapers. The dark half of a pair; the light half is
+shell, Firefox, Brave, cursor, wallpapers. The dark half of a pair; the light half is
 [cosmic-dossier-theme](https://github.com/atraxsrc/cosmic-dossier-theme).
 
 ![Pop!_OS](https://img.shields.io/badge/Pop!_OS-24.04_LTS-f25623?style=for-the-badge&logo=popos&logoColor=white)
@@ -53,6 +53,9 @@ is khaki. Errors are told apart by bold and underline.
 
 ```
 .
+├── brave
+│   ├── theme                    # Chromium theme (manifest + icons), Load unpacked
+│   └── README.md
 ├── btop
 │   └── Noir.theme               # btop colour theme
 ├── claude-desktop
@@ -205,6 +208,20 @@ Two layers:
 ```
 
 Fully quit Firefox afterward. Details and CSS rules: [`firefox/README.md`](firefox/README.md).
+
+---
+
+## Brave
+
+`brave/theme` is a Chromium theme with the Firefox theme's colours: charcoal
+frame, soot toolbar, sage icons and inactive tabs, orange on the active tab.
+Brave, Chrome, Chromium and Edge take it, and it loads straight from the
+clone, so no Chrome Web Store or Google account is needed:
+
+`brave://extensions` → **Developer mode** → **Load unpacked** → `brave/theme`
+
+Leave the clone in place, Brave keeps reading the folder. Colours, limits and
+packing a `.crx`: [`brave/README.md`](brave/README.md).
 
 ---
 
@@ -454,6 +471,8 @@ cd cosmic-noir-theme
 
 # optional extra chrome
 ./firefox/install.sh
+
+# brave: brave://extensions → Developer mode → Load unpacked → brave/theme
 
 # claude desktop (claude-desktop-extra), then Ctrl+Shift+T
 ./claude-desktop/install.sh
