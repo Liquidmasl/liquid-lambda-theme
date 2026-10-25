@@ -3,7 +3,7 @@
 Templates see every role as a variable ({{ lead }} prints #rrggbb) with the
 formats on Color ({{ lead.strip }}, {{ bg.rgba(0.8) }}, {{ lead.mix(bg, 0.2) }}),
 plus `ansi` (the 16 terminal colours), `settings` (the palette.toml inputs)
-and `contrast_gates`.
+`contrast_gates` and `web(site)` (see web.py).
 Files without .j2 in templates/ are only there to be included.
 """
 
@@ -16,6 +16,7 @@ from pathlib import Path
 
 import jinja2
 
+from . import web
 from .palette import CONTRAST_GATES, Palette, Settings
 
 SUFFIX = ".j2"
@@ -30,13 +31,14 @@ def environment(templates: Path) -> jinja2.Environment:
     )
 
 
-def context(palette: Palette, settings: Settings, **extra: object) -> dict[str, object]:
+def context(root: Path, palette: Palette, settings: Settings, **extra: object) -> dict[str, object]:
     return {
         **palette.roles,
         "ansi": palette.ansi,
         "settings": asdict(settings),
         "contrast_gates": CONTRAST_GATES,
         "wallpaper": None,
+        "web": lambda name: web.userstyle(root, name, palette),
         **extra,
     }
 
@@ -49,7 +51,7 @@ def render_all(root: Path, palette: Palette, settings: Settings) -> dict[Path, s
     """Every generated file, keyed by its path under root."""
     templates = root / "templates"
     env = environment(templates)
-    ctx = context(palette, settings)
+    ctx = context(root, palette, settings)
     return {root / name.removesuffix(SUFFIX): env.get_template(name).render(ctx) for name in template_names(templates)}
 
 
@@ -60,5 +62,5 @@ def data_uri(path: Path) -> str:
 
 def render_preview(root: Path, palette: Palette, settings: Settings, wallpaper: Path | None) -> str:
     env = environment(root / "templates")
-    ctx = context(palette, settings, wallpaper=data_uri(wallpaper) if wallpaper else None)
+    ctx = context(root, palette, settings, wallpaper=data_uri(wallpaper) if wallpaper else None)
     return env.get_template(f"tuner/index.html{SUFFIX}").render(ctx)

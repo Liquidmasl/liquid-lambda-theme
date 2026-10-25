@@ -219,6 +219,30 @@ Fully quit Firefox afterward. Details and CSS rules: [`firefox/README.md`](firef
 
 ---
 
+## Websites (GitHub, Reddit, YouTube)
+
+`web/<site>.user.css` are [Stylus](https://github.com/openstyles/stylus)
+userstyles (Stylus is a browser extension for Chrome, Brave, Edge and
+Firefox) that move each site's own dark theme onto the palette. They are
+generated from snapshots of the colour tokens the sites define
+(`data/web/<site>.json`): every token is remapped by what it is, greys onto the
+palette's grey ramp, accents onto the palette colour of their hue family, so
+GitHub's 1400 Primer variables need no hand mapping (`liquid_lambda/web.py`).
+
+Install: open the raw file in a browser with Stylus and press **Install**:
+
+- https://raw.githubusercontent.com/Liquidmasl/liquid-lambda-theme/master/web/github.user.css
+- https://raw.githubusercontent.com/Liquidmasl/liquid-lambda-theme/master/web/reddit.user.css
+- https://raw.githubusercontent.com/Liquidmasl/liquid-lambda-theme/master/web/youtube.user.css
+
+Stylus updates them from there: each build that changes a style bumps its
+`@version`. When a site redesigns, refresh its snapshot and rebuild:
+
+```bash
+uv run --with playwright python tools/snapshot_web.py github
+uv run lambda build
+```
+
 ## Chromium (Brave, Chrome)
 
 `chromium/theme` is a Chromium theme from the palette: charcoal frame, toolbar

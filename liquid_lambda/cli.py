@@ -7,7 +7,7 @@ import sys
 import webbrowser
 from pathlib import Path
 
-from . import assets
+from . import assets, web
 from .apply import TARGETS, Ctx, apply
 from .cosmic import current_wallpaper
 from .palette import Settings, build, contrast_failures
@@ -36,6 +36,8 @@ def _build(path: Path) -> bool:
             print(f"wrote {out.relative_to(ROOT)}")
     for rel in assets.build(ROOT, palette):
         print(f"wrote {rel}")
+    if web.record_versions(ROOT, palette):
+        print("wrote data/web/versions.json")
     return not failures
 
 
