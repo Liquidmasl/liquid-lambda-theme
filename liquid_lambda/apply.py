@@ -150,6 +150,13 @@ def btop(ctx: Ctx) -> list[str]:
     return ["btop: quit running btop first, it rewrites btop.conf on exit"]
 
 
+def cosmic(ctx: Ctx) -> list[str]:
+    # COSMIC apps read a theme libcosmic computes from these builder values;
+    # there is no CLI to import one, so this stays a Settings step for now
+    ron = (ctx.root / "cosmic/Lambda.ron").resolve()
+    return [f"COSMIC: Settings -> Desktop -> Appearance -> Dark -> Import  {ron}"]
+
+
 PRISMANTIS = "prismantis@prismantis"
 
 
@@ -172,6 +179,7 @@ TARGETS: dict[str, Callable[[Ctx], list[str]]] = {
     "zsh": zsh,
     "fastfetch": fastfetch,
     "btop": btop,
+    "cosmic": cosmic,
 }
 
 

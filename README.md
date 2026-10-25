@@ -72,7 +72,7 @@ is khaki. Errors are told apart by bold and underline.
 │   ├── cosmic-noir.jsonc        # Claude Desktop theme (claude-desktop-extra), dark + light
 │   └── install.sh
 ├── cosmic
-│   ├── Noir.ron                 # COSMIC Appearance import (Dark)
+│   ├── Lambda.ron               # COSMIC Appearance import (Dark, generated)
 │   ├── config/                  # baseline settings: fonts, icons, terminal look
 │   └── install.sh
 ├── cosmic-term
@@ -137,9 +137,9 @@ is khaki. Errors are told apart by bold and underline.
 
 ## COSMIC Desktop
 
-Settings → Desktop → Appearance → **Dark** → **Import** → `cosmic/Noir.ron`
+Settings → Desktop → Appearance → **Dark** → **Import** → `cosmic/Lambda.ron` (generated; `lambda apply` prints the path)
 
-Accent is orange `#F25623`. Use the `+` control if you want a custom swatch.
+Accent is the palette lead colour. Use the `+` control if you want a custom swatch.
 
 Frosted glass is on in the `.ron` at `frosted: Low` with an opacity table of
 0.66 to 0.96, tinted with the palette's middle neutral, for windows, panel,
@@ -455,7 +455,7 @@ git clone https://github.com/atraxsrc/cosmic-noir-theme.git
 cd cosmic-noir-theme
 
 # desktop
-# Settings → Appearance → Dark → Import cosmic/Noir.ron
+# Settings → Appearance → Dark → Import cosmic/Lambda.ron
 
 # terminal
 # View → Color schemes → Import cosmic-term/Noir-term.ron
