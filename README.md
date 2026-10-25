@@ -1,10 +1,9 @@
 <div align="center">
 
-# COSMIC · Noir
+# Liquid Lambda
 
-Pop!_OS 24.04 on COSMIC in charcoal, sage and orange: desktop, terminal,
-shell, Firefox, Brave, cursor, wallpapers. The dark half of a pair; the light half is
-[cosmic-dossier-theme](https://github.com/atraxsrc/cosmic-dossier-theme).
+Pop!_OS 24.04 on COSMIC, every app themed from one palette file.
+Forked from [cosmic-noir-theme](https://github.com/atraxsrc/cosmic-noir-theme).
 
 ![Pop!_OS](https://img.shields.io/badge/Pop!_OS-24.04_LTS-f25623?style=for-the-badge&logo=popos&logoColor=white)
 ![COSMIC](https://img.shields.io/badge/COSMIC-1.0.0-88a57d?style=for-the-badge)
@@ -13,6 +12,24 @@ shell, Firefox, Brave, cursor, wallpapers. The dark half of a pair; the light ha
 ![License](https://img.shields.io/badge/License-MIT-7d837d?style=for-the-badge)
 
 </div>
+
+> [!NOTE]
+> Work in progress. The generator (`palette.toml` → `uv run lambda build`) and
+> the palette tuner (`tuner/index.html`) are in; the app themes below are still
+> the upstream Noir files and move onto the generator one by one, renamed to
+> Lambda as they do.
+
+## Generator
+
+```bash
+uv run lambda build     # render every template in templates/ from palette.toml
+uv run lambda check     # contrast gates + generated files up to date (pre-commit runs this)
+uv run lambda preview --wallpaper    # tuner on the wallpaper COSMIC shows, opened in the browser (tuner/local.html, not committed; --no-open to skip)
+uv run lambda preview --wallpaper ~/Pictures/wall.png   # or any image; --output DP-1 picks one screen's wallpaper
+```
+
+Open `tuner/index.html` in a browser, move the sliders, press
+**Copy palette.toml** and paste the block into `palette.toml`.
 
 ---
 ![Pop!_OS COSMIC desktop with the Noir theme](assets/screenshot.png)
@@ -39,13 +56,6 @@ kept as is. Every text colour is at least 4.5:1 on the window background.
 
 Error shares the orange: the upstream palette has no red, and its "red" slot
 is khaki. Errors are told apart by bold and underline.
-
-| Role | Noir | Dossier |
-|------|------|---------|
-| Background | `#171717` | `#D0D0C8` |
-| Text | `#CCD0CF` | `#242424` |
-| Accent | `#F25623` | `#953B19` |
-| Success | `#88A57D` | `#51573B` |
 
 ---
 
@@ -98,7 +108,7 @@ is khaki. Errors are told apart by bold and underline.
 │   ├── cosmic-noir.tdesktop-theme  # built theme, open this in Telegram
 │   └── build.sh                 # rebuilds it, optionally with a wallpaper
 ├── vscode
-│   ├── themes/                  # Cursor / VS Code colour themes, Noir (dark) + Dossier (light)
+│   ├── themes/                  # Cursor / VS Code colour theme, Noir
 │   ├── package.json             # extension manifest
 │   ├── install.sh               # packs a .vsix, installs it with cursor --install-extension
 │   └── README.md
@@ -111,11 +121,13 @@ is khaki. Errors are told apart by bold and underline.
 ├── assets
 │   ├── cursors/                 # cursor preview
 │   ├── cosmic-term/             # scheme previews for cosmic-term/README.md
-│   ├── screenshot.png           # README screenshot
-│   └── wallpaper.png            # the anime portrait on the bare desktop
-├── backgrounds/                 # wallpapers, noir-<subject>.png (see Icons and wallpaper)
-├── docs
-│   └── showcase.md              # the rice describing itself, for the Postilla pane of the screenshot
+│   └── screenshot.png           # README screenshot (upstream Noir, replaced later)
+├── liquid_lambda/               # the generator: colour maths, palette roles, renderer, CLI
+├── templates/                   # <path>.j2 renders to <path>; tuner/engine.js mirrors the palette maths
+├── tuner/index.html             # generated palette tuner
+├── tests/                       # pytest, incl. JS/Python engine parity
+├── palette.toml                 # the inputs every colour comes from
+├── pyproject.toml
 ├── LICENSE
 └── README.md
 ```
@@ -135,12 +147,6 @@ applets and system UI (maximized apps stay solid), and corners are squared
 Appearance → Style → Frosted glass after import; those sliders survive a theme switch.
 
 Export from Appearance if you tweak backgrounds / tints so you do not lose them.
-
-Pairing tip: import `Dossier.ron` from
-[cosmic-dossier-theme](https://github.com/atraxsrc/cosmic-dossier-theme) into
-the Light slot and COSMIC's Dark / Light toggle flips between the two.
-Wallpaper, Firefox and the shell layer do not follow the toggle; those are
-per-rice files.
 
 ### Baseline settings
 
@@ -248,11 +254,9 @@ so installing from either repo gives the same theme.
 
 ## Cursor editor
 
-`vscode/` is a colour theme extension for [Cursor](https://cursor.com) with
-both halves of the pair: **Cosmic Noir** and **Cosmic Dossier**. It is a plain
-VS Code theme extension, so VS Code and VSCodium take it too, and the same
-folder ships in cosmic-dossier-theme. Code is coloured the way Neovim is in
-each rice; the workbench is charcoal with soot menus, hovers and inputs,
+`vscode/` is a colour theme extension for [Cursor](https://cursor.com):
+**Cosmic Noir**. It is a plain VS Code theme extension, so VS Code and VSCodium
+take it too. Code is coloured the way Neovim is in the rice; the workbench is charcoal with soot menus, hovers and inputs,
 orange on the active tab, buttons and menu highlight, and the integrated
 terminal uses the COSMIC Terminal scheme. Cursor builds its Agent and chat
 panels from the same theme colours, so they follow along.
@@ -264,9 +268,8 @@ panels from the same theme colours, so they follow along.
 It packs `vscode/` into a `.vsix` and installs it with
 `cursor --install-extension`; run it again after editing the theme. Then press
 <kbd>Ctrl</kbd>+<kbd>K</kbd> <kbd>Ctrl</kbd>+<kbd>T</kbd> in Cursor and pick
-**Cosmic Noir**. Three lines in Cursor's `settings.json` make it follow
-COSMIC's Dark / Light toggle between Noir and Dossier; they, the colours and
-the contrast notes are in [`vscode/README.md`](vscode/README.md).
+**Cosmic Noir**. The colours and the contrast notes are in
+[`vscode/README.md`](vscode/README.md).
 
 ---
 
@@ -289,14 +292,12 @@ background is plain charcoal; to put a wallpaper behind the chat instead
 (ImageMagick re-encodes it to a 2560px JPEG, Telegram caps theme files at 5 MB):
 
 ```bash
-./telegram/build.sh --wallpaper backgrounds/noir-anime.png
+./telegram/build.sh --wallpaper ~/Pictures/wall.png
 ```
 
 Built against Telegram Desktop 7.3.1. Calls, group calls, statistics charts and
 premium badges keep Telegram's own colours.
 
-Telegram has no dark / light pairing, so Dossier, the light half, ships its own
-theme.
 
 ---
 
@@ -437,21 +438,6 @@ Restart open apps afterwards (Files caches icons per window).
 Add `--system` to install to `/usr/share/icons` instead, for every user and the
 login screen (asks for sudo); `--user` is the default.
 
-Wallpapers ship in [`backgrounds/`](backgrounds/), named `noir-<subject>.png`:
-the thirteen subjects every dark rice has, rendered in sage and orange on charcoal:
-the Harbor Dark reaper and Hyundai blueprint, the COSMIC astronaut, the samurai,
-sushi switch, geisha, JS mug and neon street from the Tokyo Night set, The Greek
-eagle and ink portrait, and three new scenes: city, panel and tower.
-The anime portrait (`noir-anime.png`) is the one in the screenshot.
-The subjects come from [HANCORE-linux](https://github.com/HANCORE-linux) (MIT) and
-[cool-wallpapers](https://github.com/atraxsrc/cool-wallpapers); each was rendered again in this palette, then upscaled.
-More from the upstream theme in cool-wallpapers, folder
-[`omarchy/greek-noir/`](https://github.com/atraxsrc/cool-wallpapers/tree/main/omarchy/greek-noir) (MIT).
-
-Settings → Wallpaper → Add image → a file from `backgrounds/`, or one you downloaded.
-
-![The anime portrait wallpaper on the Noir desktop, panel only](assets/wallpaper.png)
-
 ---
 
 ## Setup
@@ -495,9 +481,6 @@ reboot
 ./nvim/install.sh
 mkdir -p ~/.config/btop/themes && cp btop/Noir.theme ~/.config/btop/themes/
 
-# wallpaper
-# Settings → Wallpaper → Add image → a file from backgrounds/ (see Icons and wallpaper above)
-
 ./icons/install.sh                  # icons (see Icons above)
 # Maple fonts (https://github.com/subframe7536/maple-font), then
 # fonts, icons, terminal look from cosmic/config/
@@ -540,17 +523,11 @@ The GUI steps it cannot do are printed at the end:
 1. Settings → Desktop → Appearance → Dark → Import `cosmic/Noir.ron`
 2. COSMIC Terminal → View → Color schemes → Dark tab → Import `cosmic-term/Noir-term.ron`
 3. Firefox: disable the old rice's add-on, enable [this one](https://addons.mozilla.org/en-US/firefox/addon/cosmic-noir-theme/), restart Firefox
-4. Settings → Wallpaper → a file from `backgrounds/`
-5. Claude Desktop: Ctrl+Shift+T → `cosmic-noir`, Appearance → Dark
-6. `exec zsh`, restart Neovim (`:Lazy clean` drops plugins only the old specs used)
+4. Claude Desktop: Ctrl+Shift+T → `cosmic-noir`, Appearance → Dark
+5. `exec zsh`, restart Neovim (`:Lazy clean` drops plugins only the old specs used)
 
 Skip 1 and 2 when that slot already holds Noir. The first time on this rice,
 run [Setup](#setup) once for the fonts, icons and cursor.
-
-**Within the pair** (Noir ↔ [Dossier](https://github.com/atraxsrc/cosmic-dossier-theme)): the two halves
-sit side by side in COSMIC's Dark and Light slots and share one Claude Desktop
-theme, so after the first time only the Firefox add-on and the wallpaper are
-left by hand. Add `--keep-icons` to keep one icon colour across the pair.
 
 Leaving Noir is the next rice's `./scripts/switch.sh`. `./cursors/uninstall.sh`
 puts the Pop cursor back.
@@ -572,11 +549,10 @@ puts the Pop cursor back.
 
 ## Credits
 
-- Palette and wallpapers: [omarchy-greek-noir-theme](https://github.com/HANCORE-linux/omarchy-greek-noir-theme)
-  by HANCORE-linux (MIT). This repo is a COSMIC port; the upstream wallpapers
-  are mirrored in cool-wallpapers, the renders for this palette are in `backgrounds/`.
-- Light half: [cosmic-dossier-theme](https://github.com/atraxsrc/cosmic-dossier-theme).
-  Shared baseline (frosted glass, squared corners, fonts) from
+- Fork of [cosmic-noir-theme](https://github.com/atraxsrc/cosmic-noir-theme) by atraxsrc (MIT),
+  itself a COSMIC port of [omarchy-greek-noir-theme](https://github.com/HANCORE-linux/omarchy-greek-noir-theme)
+  by HANCORE-linux (MIT).
+- Shared baseline (frosted glass, squared corners, fonts) from
   [cosmic-darkgold-theme](https://github.com/atraxsrc/cosmic-darkgold-theme).
 
 ## License

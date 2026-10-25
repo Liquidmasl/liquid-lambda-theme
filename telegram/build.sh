@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # Build telegram/<NAME>.tdesktop-theme for Telegram Desktop: a zip of
 # colors.tdesktop-theme plus the chat background. The default background is
-# the theme's windowBg; --wallpaper puts one of backgrounds/*.png behind the chat,
+# the theme's windowBg; --wallpaper puts an image of your choice behind the chat,
 # re-encoded to a 2560px JPEG (ImageMagick) to stay under Telegram's 5 MB limit.
 #   ./telegram/build.sh
-#   ./telegram/build.sh --wallpaper backgrounds/noir-anime.png
+#   ./telegram/build.sh --wallpaper ~/Pictures/wall.png
 set -euo pipefail
 
 NAME="cosmic-noir"                  # the only line that differs between rices

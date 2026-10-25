@@ -8,3 +8,6 @@
 *.crx
 *.pem
 Cached Theme.pak
+.venv/
+__pycache__/
+tuner/local.html

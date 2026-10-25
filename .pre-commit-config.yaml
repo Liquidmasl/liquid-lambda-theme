@@ -3,3 +3,17 @@ repos:
     rev: v8.30.1
     hooks:
       - id: gitleaks
+  - repo: local
+    hooks:
+      - id: lambda-check
+        name: lambda check (contrast + generated files up to date)
+        entry: uv run lambda check
+        language: system
+        pass_filenames: false
+        always_run: true
+      - id: pytest
+        name: pytest
+        entry: uv run pytest -q
+        language: system
+        pass_filenames: false
+        files: ^(liquid_lambda/|templates/|tests/|palette\.toml)

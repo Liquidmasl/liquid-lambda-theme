@@ -132,9 +132,8 @@ $NAME is active. Left to do by hand (skip what is already done):
   1. Settings → Desktop → Appearance → $Mode → Import cosmic/$RON
   2. COSMIC Terminal → View → Color schemes → $Mode tab → Import cosmic-term/$TERM_RON
   3. Firefox: enable this rice's add-on in about:addons (link in the README), restart Firefox
-  4. Settings → Wallpaper → a file from backgrounds/
-  5. Claude Desktop: Ctrl+Shift+T → $claude_theme, Appearance → $Mode
-  6. exec zsh, restart Neovim
+  4. Claude Desktop: Ctrl+Shift+T → $claude_theme, Appearance → $Mode
+  5. exec zsh, restart Neovim
   Cursor (optional, sudo + reboot): ./cursors/install.sh
 EOF
 for tg in telegram/*.tdesktop-theme; do
