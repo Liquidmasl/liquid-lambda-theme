@@ -179,6 +179,11 @@ def kvantum(ctx: Ctx) -> list[str]:
     return ["Kvantum: Qt apps need QT_STYLE_OVERRIDE=kvantum in their environment; restart them"]
 
 
+def cursors(ctx: Ctx) -> list[str]:
+    # needs sudo (/etc/environment) and a new login, so it stays a manual step
+    return ["Cursor: ./cursors/install.sh (sudo), then reboot; once, later builds only need it re-run"]
+
+
 EDITORS = ("cursor", "code", "codium")
 
 
@@ -218,6 +223,7 @@ TARGETS: dict[str, Callable[[Ctx], list[str]]] = {
     "chromium": chromium,
     "vscode": vscode,
     "kvantum": kvantum,
+    "cursors": cursors,
 }
 
 

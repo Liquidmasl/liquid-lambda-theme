@@ -7,6 +7,7 @@ import sys
 import webbrowser
 from pathlib import Path
 
+from . import assets
 from .apply import TARGETS, Ctx, apply
 from .cosmic import current_wallpaper
 from .palette import Settings, build, contrast_failures
@@ -33,6 +34,8 @@ def _build(path: Path) -> bool:
         if not out.exists() or out.read_text() != text:
             out.write_text(text)
             print(f"wrote {out.relative_to(ROOT)}")
+    for rel in assets.build(ROOT, palette):
+        print(f"wrote {rel}")
     return not failures
 
 
@@ -62,6 +65,7 @@ def cmd_check(args: argparse.Namespace) -> int:
     for path, text in render_all(ROOT, palette, settings).items():
         if not path.exists() or path.read_text() != text:
             problems.append(f"stale: {path.relative_to(ROOT)} (run: uv run lambda build)")
+    problems += [f"stale: {rel} (run: uv run lambda build)" for rel in assets.stale(ROOT, palette)]
     for p in problems:
         print(p, file=sys.stderr)
     if not problems:
