@@ -1,0 +1,36 @@
+{
+  "manifest_version": 3,
+  "name": "Liquid Lambda",
+  "version": "1.0",
+  "description": "Liquid Lambda: warm charcoal, cyan rim, amber core. Generated from palette.toml.",
+  "icons": {
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "theme": {
+    "colors": {
+      "frame": [20, 12, 11],
+      "frame_inactive": [20, 12, 11],
+      "frame_incognito": [20, 12, 11],
+      "frame_incognito_inactive": [20, 12, 11],
+      "background_tab": [20, 12, 11],
+      "background_tab_inactive": [20, 12, 11],
+      "background_tab_incognito": [20, 12, 11],
+      "background_tab_incognito_inactive": [20, 12, 11],
+      "toolbar": [29, 19, 18],
+      "tab_text": [0, 223, 254],
+      "tab_background_text": [146, 138, 137],
+      "tab_background_text_inactive": [146, 138, 137],
+      "tab_background_text_incognito": [146, 138, 137],
+      "tab_background_text_incognito_inactive": [146, 138, 137],
+      "bookmark_text": [188, 182, 181],
+      "toolbar_button_icon": [166, 193, 199],
+      "omnibox_background": [38, 29, 27],
+      "omnibox_text": [228, 224, 223],
+      "ntp_background": [20, 12, 11],
+      "ntp_text": [228, 224, 223],
+      "ntp_link": [0, 223, 254]
+    }
+  }
+}

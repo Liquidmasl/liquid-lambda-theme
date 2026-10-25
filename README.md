@@ -63,16 +63,16 @@ is khaki. Errors are told apart by bold and underline.
 
 ```
 .
-├── brave
+├── chromium
 │   ├── theme                    # Chromium theme (manifest + icons), Load unpacked
 │   └── README.md
 ├── btop
-│   └── Noir.theme               # btop colour theme
+│   └── Lambda.theme             # btop colour theme (generated)
 ├── claude-desktop
 │   ├── cosmic-noir.jsonc        # Claude Desktop theme (claude-desktop-extra), dark + light
 │   └── install.sh
 ├── cosmic
-│   ├── Noir.ron                 # COSMIC Appearance import (Dark)
+│   ├── Lambda.ron               # COSMIC Appearance import (Dark, generated)
 │   ├── config/                  # baseline settings: fonts, icons, terminal look
 │   └── install.sh
 ├── cosmic-term
@@ -80,7 +80,8 @@ is khaki. Errors are told apart by bold and underline.
 │   ├── Noir-term-*.ron          # dimmer plain-text variants, same ANSI colours
 │   └── README.md                # previews and which one to pick
 ├── cursors
-│   ├── Oxygen-Noir-*/            # cursor themes, one per icon colour, patched for COSMIC apps
+│   ├── base/                    # uncoloured Oxygen theme, the recolour source
+│   ├── Oxygen-Lambda-Lead/      # cursor in the lead colour (generated), patched for COSMIC apps
 │   ├── recolour.py              # makes a variant from any other, see cursors/README.md
 │   ├── install.sh
 │   ├── uninstall.sh
@@ -88,9 +89,8 @@ is khaki. Errors are told apart by bold and underline.
 ├── icons
 │   └── install.sh               # Cosmic-Noir icon pack from cosmic-icon-themes
 ├── fastfetch
-│   ├── config.jsonc             # orange / grey-sage fastfetch config
-│   ├── cosmic.txt               # COSMIC logo
-│   └── install.sh
+│   ├── config.jsonc             # fastfetch config (generated)
+│   └── cosmic.txt               # COSMIC logo
 ├── firefox
 │   ├── theme                    # Cosmic Noir theme add-on (manifest + icons)
 │   ├── chrome
@@ -113,11 +113,13 @@ is khaki. Errors are told apart by bold and underline.
 │   ├── install.sh               # packs a .vsix, installs it with cursor --install-extension
 │   └── README.md
 ├── scripts
-│   ├── update_system.sh         # nala + flatpak, orange / sage ANSI
-│   └── switch.sh                # make this the active rice (see Switching rice)
+│   └── update_system.sh         # nala + flatpak, orange / sage ANSI
 ├── zsh
-│   ├── noir.zsh                 # LS_COLORS, highlighting colours, aliases, starship
-│   └── install.sh
+│   ├── lambda.zsh               # LS_COLORS, highlighting colours (generated)
+│   └── aliases.zsh              # optional aliases + starship init
+├── wezterm/Lambda.toml          # WezTerm colour scheme (generated)
+├── starship/palette.toml        # Starship palette (generated)
+├── prismantis/lambda.json       # prismantis colour slots (generated)
 ├── assets
 │   ├── cursors/                 # cursor preview
 │   ├── cosmic-term/             # scheme previews for cosmic-term/README.md
@@ -136,9 +138,9 @@ is khaki. Errors are told apart by bold and underline.
 
 ## COSMIC Desktop
 
-Settings → Desktop → Appearance → **Dark** → **Import** → `cosmic/Noir.ron`
+Settings → Desktop → Appearance → **Dark** → **Import** → `cosmic/Lambda.ron` (generated; `lambda apply` prints the path)
 
-Accent is orange `#F25623`. Use the `+` control if you want a custom swatch.
+Accent is the palette lead colour. Use the `+` control if you want a custom swatch.
 
 Frosted glass is on in the `.ron` at `frosted: Low` with an opacity table of
 0.66 to 0.96, tinted with the palette's middle neutral, for windows, panel,
@@ -217,19 +219,18 @@ Fully quit Firefox afterward. Details and CSS rules: [`firefox/README.md`](firef
 
 ---
 
-## Brave
+## Chromium (Brave, Chrome)
 
-`brave/theme` is a Chromium theme with the Firefox theme's colours: charcoal
-frame, soot toolbar, sage icons and inactive tabs, orange on the active tab.
-Brave, Chrome, Chromium and Edge take it, and it loads straight from the
-clone, so no Chrome Web Store or Google account is needed:
+`chromium/theme` is a Chromium theme from the palette: charcoal frame, toolbar
+in the first surface, cyan active tab text and new-tab links. Brave, Chrome,
+Chromium and Edge take it, loaded straight from the clone, so no Chrome Web
+Store or Google account is needed:
 
-`brave://extensions` → **Developer mode** → **Load unpacked** → `brave/theme`
+`chrome://extensions` (or `brave://extensions`) → **Developer mode** → **Load unpacked** → `chromium/theme`
 
-Leave the clone in place, Brave keeps reading the folder. Colours, limits and
-packing a `.crx`: [`brave/README.md`](brave/README.md).
-
----
+Leave the clone in place, the browser keeps reading the folder; after a
+`lambda build`, press the reload arrow on the theme's card. Colours, limits and
+packing a `.crx`: [`chromium/README.md`](chromium/README.md).
 
 ## Claude Desktop
 
@@ -303,20 +304,17 @@ premium badges keep Telegram's own colours.
 
 ## Cursor
 
-**Oxygen** cursors recoloured to the icon colours, one per folder colour of the
-Cosmic-Noir icon pack: **Orange** (default), **Sage**, **Dark**. Patched with the cursor
-names COSMIC apps ask for. COSMIC has no cursor picker yet, so the script sets it:
+**Oxygen** cursors in the palette's lead colour (`cursors/Oxygen-Lambda-Lead`,
+generated by `lambda build`), patched with the cursor names COSMIC apps ask
+for. COSMIC has no cursor picker yet, so the script sets it (sudo, then reboot):
 
 ```bash
-./cursors/install.sh                      # Orange
-./cursors/install.sh --variant Sage      # or another, see --list
+./cursors/install.sh
 reboot
 ```
 
-Previews, what the script touches, how to undo it and how the colours are made:
+What the script touches, how to undo it and how the colour is made:
 [`cursors/README.md`](cursors/README.md).
-
----
 
 ## Scripts
 
@@ -330,17 +328,6 @@ chmod +x scripts/update_system.sh
 ./scripts/update_system.sh
 ```
 
-### `switch.sh`
-
-Makes this the active rice, coming from any other `cosmic-*-theme` rice. See
-[Switching rice](#switching-rice).
-
-```bash
-./scripts/switch.sh
-```
-
----
-
 ## Terminal extras
 
 Need a [Nerd Font](https://www.nerdfonts.com/) in the terminal for the icons
@@ -348,26 +335,18 @@ Need a [Nerd Font](https://www.nerdfonts.com/) in the terminal for the icons
 
 ### zsh
 
-`zsh/noir.zsh` is the rice part of the shell only: `LS_COLORS` (also used by
-lsd for file names and by the completion menu), orange / sage / khaki colours
-for zsh-autosuggestions and zsh-syntax-highlighting, lsd / bat / nvim aliases
-and the starship prompt. Your own `~/.zshrc` stays private and sources it.
+`zsh/lambda.zsh` (generated) holds the shell colours: `LS_COLORS` (also used by
+lsd for file names and by the completion menu) and the zsh-autosuggestions /
+zsh-syntax-highlighting styles. `lambda apply --only zsh` sources it from
+`~/.zshrc.local` when that exists (a file dotfile managers usually leave alone),
+otherwise from `~/.zshrc`, inside a marked block.
 
-Needs zsh + [oh-my-zsh](https://ohmyz.sh/). `install.sh` clones the two
-plugins if missing and appends one `source` line to `~/.zshrc` (backup in
-`~/.zshrc.bak`):
-
-```bash
-./zsh/install.sh
-exec zsh
-```
-
-In `~/.zshrc` keep `ZSH_THEME=""` and
-`plugins=(git sudo zsh-autosuggestions zsh-syntax-highlighting)`.
+`zsh/aliases.zsh` keeps upstream's optional lsd / bat / nvim aliases and the
+starship init; source it yourself if you want them.
 
 ### lsd
 
-File names are coloured by `LS_COLORS` from `zsh/noir.zsh`;
+File names are coloured by `LS_COLORS` from `zsh/lambda.zsh`;
 `lsd/colors.yaml` colours the other columns with the 256-colour codes nearest
 the palette (202 orange, 208 ember, 108 sage, 144 khaki, 246 grey-sage,
 243 muted, 240 dim). lsd 1.0.0 does not accept `#hex` there.
@@ -379,14 +358,10 @@ lsd -l
 
 ### fastfetch
 
-COSMIC logo in orange, Hardware / Software / Age boxes in dim grey with
-grey-sage keys. `install.sh` backs up any existing
-`~/.config/fastfetch/config.jsonc` to `config.jsonc.bak`.
-
-```bash
-./fastfetch/install.sh
-fastfetch
-```
+COSMIC logo in the lead colour, Hardware / Software / Age boxes in the line
+colour, section titles in the second colour. `lambda apply --only fastfetch`
+links `fastfetch/config.jsonc` and `fastfetch/cosmic.txt` into
+`~/.config/fastfetch/`.
 
 ### Neovim
 
@@ -407,12 +382,42 @@ run `:colorscheme noir`.
 
 ### btop
 
-`btop/Noir.theme`: charcoal background, dim grey boxes, orange titles, meters
-ramp from sage through khaki to orange.
+`btop/Lambda.theme` (generated): meters run from the cyan rim through the amber
+core to the error red. `lambda apply --only btop` links it into
+`~/.config/btop/themes/` and sets `color_theme = "Lambda"` in `btop.conf`
+(quit btop first, it rewrites the file on exit).
 
-```bash
-mkdir -p ~/.config/btop/themes
-cp btop/Noir.theme ~/.config/btop/themes/
+### WezTerm
+
+`wezterm/Lambda.toml` (generated) is a WezTerm colour scheme with the 16 ANSI
+colours, cursor, selection and tab bar. `lambda apply --only wezterm` links it
+into `~/.config/wezterm/colors/`; select it in `wezterm.lua`:
+
+```lua
+config.color_scheme = 'Lambda'
+```
+
+Anything under `config.colors` still overrides single colours of the scheme.
+
+### Starship
+
+`starship/palette.toml` (generated) is a `[palettes.lambda]` table that also
+overrides the standard colour names, so styles like `bold cyan` come out in
+the palette in any terminal. `lambda apply --only starship` adds it and
+`palette = "lambda"` to `~/.config/starship.toml` between
+`# >>> liquid-lambda` markers, and refuses when the file already selects
+another palette.
+
+### prismantis (Claude Code)
+
+`prismantis/lambda.json` (generated) holds the 22 colour slots of the
+[prismantis](https://github.com/NahumLitvin/prismantis) Claude Code plugin.
+`lambda apply --only prismantis` merges them into
+`pluginConfigs["prismantis@prismantis"].options` in `~/.claude/settings.json`;
+run `/reload` in open sessions. The terminal scheme and prismantis come from
+the same palette, so Claude Code's truecolor text and the ANSI colours of the
+statusline and tools agree.
+
 # btop → Esc → Options → Color theme → Noir
 ```
 
@@ -447,7 +452,7 @@ git clone https://github.com/atraxsrc/cosmic-noir-theme.git
 cd cosmic-noir-theme
 
 # desktop
-# Settings → Appearance → Dark → Import cosmic/Noir.ron
+# Settings → Appearance → Dark → Import cosmic/Lambda.ron
 
 # terminal
 # View → Color schemes → Import cosmic-term/Noir-term.ron
@@ -458,7 +463,7 @@ cd cosmic-noir-theme
 # optional extra chrome
 ./firefox/install.sh
 
-# brave: brave://extensions → Developer mode → Load unpacked → brave/theme
+# chromium: chrome://extensions → Developer mode → Load unpacked → chromium/theme
 
 # claude desktop (claude-desktop-extra), then Ctrl+Shift+T
 ./claude-desktop/install.sh
@@ -470,16 +475,13 @@ cd cosmic-noir-theme
 # Settings → Chat Settings → Chat wallpaper → Choose from file → telegram/cosmic-noir.tdesktop-theme
 
 # cursor (then reboot), see cursors/README.md
-./cursors/install.sh                      # Orange
-./cursors/install.sh --variant Sage      # or another, see --list
+./cursors/install.sh
 reboot
 
 # shell + terminal tools (see Terminal extras above)
-./zsh/install.sh
+uv run lambda apply   # zsh, fastfetch, btop, WezTerm, Starship, prismantis
 ./lsd/install.sh
-./fastfetch/install.sh
 ./nvim/install.sh
-mkdir -p ~/.config/btop/themes && cp btop/Noir.theme ~/.config/btop/themes/
 
 ./icons/install.sh                  # icons (see Icons above)
 # Maple fonts (https://github.com/subframe7536/maple-font), then
@@ -489,50 +491,19 @@ mkdir -p ~/.config/btop/themes && cp btop/Noir.theme ~/.config/btop/themes/
 
 ---
 
-## Switching rice
-
-The installers replace what they own (with a `*.bak` copy), but some things
-pile up instead: shell layers in `~/.zshrc`, LazyVim specs, the updater link and
-btop's theme setting. `scripts/switch.sh` makes Noir the active rice, coming
-from any other `cosmic-*-theme` rice, and tidies those up. Every rice repo ships
-the same script.
+## Applying
 
 ```bash
-./scripts/switch.sh               # switch, icons included
-./scripts/switch.sh --keep-icons  # leave the current icon theme alone
+uv run lambda apply            # build, then install every target
+uv run lambda apply --dry-run  # show what would change
+uv run lambda apply --only wezterm,starship
 ```
 
-It backs up every file it replaces, then:
-
-- copies `cosmic/config/` (fonts, terminal look, icons) and turns dark mode on.
-  The terminal scheme and icon theme are only replaced when the current one is
-  not already a Noir variant, so a dimmer text variant or another icon colour
-  survives. Icons stay as they are until `./icons/install.sh` has run.
-- runs the fastfetch, lsd, Neovim and Claude Desktop installers and sets
-  btop's `color_theme`
-- moves every other rice's LazyVim spec from `~/.config/nvim/lua/plugins/` to
-  `~/.config/nvim/rice-off/` (LazyVim loads every spec there and the last
-  colorscheme wins); your own specs stay
-- comments out every other rice's `source` line in `~/.zshrc`, and
-  cosmic-ricing's `ricing/zsh/colors.zsh`, then uncomments Noir's or adds it
-- points `~/update_system.sh` at this repo's updater
-- installs the Firefox userChrome / userContent
-
-The GUI steps it cannot do are printed at the end:
-
-1. Settings → Desktop → Appearance → Dark → Import `cosmic/Noir.ron`
-2. COSMIC Terminal → View → Color schemes → Dark tab → Import `cosmic-term/Noir-term.ron`
-3. Firefox: disable the old rice's add-on, enable [this one](https://addons.mozilla.org/en-US/firefox/addon/cosmic-noir-theme/), restart Firefox
-4. Claude Desktop: Ctrl+Shift+T → `cosmic-noir`, Appearance → Dark
-5. `exec zsh`, restart Neovim (`:Lazy clean` drops plugins only the old specs used)
-
-Skip 1 and 2 when that slot already holds Noir. The first time on this rice,
-run [Setup](#setup) once for the fonts, icons and cursor.
-
-Leaving Noir is the next rice's `./scripts/switch.sh`. `./cursors/uninstall.sh`
-puts the Pop cursor back.
-
----
+Whole generated files are symlinked, so a later `lambda build` updates them
+without another apply. Files you own get a marked block or only our keys, after
+a timestamped backup (`*.bak-YYYYmmdd-HHMMSS`). When chezmoi manages one of
+them, apply says so: keep the change with `chezmoi re-add <file>`. Steps it
+cannot do itself are listed at the end.
 
 ## Stack
 

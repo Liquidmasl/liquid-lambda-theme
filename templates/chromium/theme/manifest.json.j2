@@ -1,0 +1,37 @@
+{
+  "manifest_version": 3,
+  "name": "Liquid Lambda",
+  "version": "1.0",
+  "description": "Liquid Lambda: warm charcoal, cyan rim, amber core. Generated from palette.toml.",
+  "icons": {
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "theme": {
+    "colors": {
+{%- set frame = bg.rgb %}
+      "frame": [{{ frame }}],
+      "frame_inactive": [{{ frame }}],
+      "frame_incognito": [{{ frame }}],
+      "frame_incognito_inactive": [{{ frame }}],
+      "background_tab": [{{ frame }}],
+      "background_tab_inactive": [{{ frame }}],
+      "background_tab_incognito": [{{ frame }}],
+      "background_tab_incognito_inactive": [{{ frame }}],
+      "toolbar": [{{ surface1.rgb }}],
+      "tab_text": [{{ lead.rgb }}],
+      "tab_background_text": [{{ muted.rgb }}],
+      "tab_background_text_inactive": [{{ muted.rgb }}],
+      "tab_background_text_incognito": [{{ muted.rgb }}],
+      "tab_background_text_incognito_inactive": [{{ muted.rgb }}],
+      "bookmark_text": [{{ sub.rgb }}],
+      "toolbar_button_icon": [{{ sub.mix(lead, 0.25).rgb }}],
+      "omnibox_background": [{{ surface2.rgb }}],
+      "omnibox_text": [{{ text.rgb }}],
+      "ntp_background": [{{ frame }}],
+      "ntp_text": [{{ text.rgb }}],
+      "ntp_link": [{{ lead.rgb }}]
+    }
+  }
+}

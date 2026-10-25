@@ -3,13 +3,13 @@
 #
 #   ./cursors/uninstall.sh
 #
-# Removes every Oxygen-Noir-<Variant> from /usr/share/icons and ~/.local/share/icons.
+# Removes the Oxygen-Lambda-Lead cursor from /usr/share/icons and ~/.local/share/icons.
 # Cursor settings are reset only when one of them is the active cursor, which puts you
 # back on the Pop!_OS default. Config files get a .bak-<timestamp> copy first.
 set -euo pipefail
 
-RICE="Noir"
-VARIANTS=(Orange Sage Dark)
+RICE="Lambda"
+VARIANTS=(Lead)
 SYS="/usr/share/icons"
 USR="$HOME/.local/share/icons"
 STAMP="$(date +%Y%m%d-%H%M%S)"
@@ -31,7 +31,7 @@ for v in "${VARIANTS[@]}"; do
     found=true
   fi
 done
-$found || echo "No Oxygen-Noir-* cursor is installed"
+$found || echo "No Oxygen-Lambda cursor is installed"
 
 if ! $mine; then
   echo "Done. Active cursor (${ACTIVE:-none}) left as is."

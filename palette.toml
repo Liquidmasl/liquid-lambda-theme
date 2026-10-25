@@ -9,7 +9,7 @@ tint_strength = 55       # 0-100, how far the greys lean into the tint
 second_loudness = 70     # 20-100, saturation of the colour that does not lead
 cyan_hue = 212           # 180-235, OKLCH hue of the rim colour
 amber_hue = 66           # 35-85, OKLCH hue of the core colour
-lead_chroma = 85         # 40-100, saturation of the lead colour
+lead_chroma = 100        # 40-100, saturation of the lead colour
 
 [pin]
 # Fix any base role by hand; aliases (link, hint, warn, ANSI) follow it.

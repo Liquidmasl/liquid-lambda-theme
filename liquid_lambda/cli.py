@@ -1,4 +1,4 @@
-"""lambda build | check | preview"""
+"""lambda build | check | preview | apply"""
 
 from __future__ import annotations
 
@@ -7,6 +7,8 @@ import sys
 import webbrowser
 from pathlib import Path
 
+from . import assets
+from .apply import TARGETS, Ctx, apply
 from .cosmic import current_wallpaper
 from .palette import Settings, build, contrast_failures
 from .render import render_all, render_preview
@@ -21,17 +23,40 @@ def _load(path: Path):
     return settings, build(settings)
 
 
-def cmd_build(args: argparse.Namespace) -> int:
-    settings, palette = _load(args.palette)
+def _build(path: Path) -> bool:
+    """Render everything; False when the palette fails a contrast gate."""
+    settings, palette = _load(path)
     failures = contrast_failures(palette)
     for f in failures:
         print(f"contrast: {f}", file=sys.stderr)
-    for path, text in render_all(ROOT, palette, settings).items():
-        path.parent.mkdir(parents=True, exist_ok=True)
-        if not path.exists() or path.read_text() != text:
-            path.write_text(text)
-            print(f"wrote {path.relative_to(ROOT)}")
-    return 1 if failures else 0
+    for out, text in render_all(ROOT, palette, settings).items():
+        out.parent.mkdir(parents=True, exist_ok=True)
+        if not out.exists() or out.read_text() != text:
+            out.write_text(text)
+            print(f"wrote {out.relative_to(ROOT)}")
+    for rel in assets.build(ROOT, palette):
+        print(f"wrote {rel}")
+    return not failures
+
+
+def cmd_build(args: argparse.Namespace) -> int:
+    return 0 if _build(args.palette) else 1
+
+
+def cmd_apply(args: argparse.Namespace) -> int:
+    if args.list:
+        print("\n".join(TARGETS))
+        return 0
+    if not _build(args.palette):
+        print("not applying a palette that fails contrast; fix palette.toml first", file=sys.stderr)
+        return 1
+    names = args.only.split(",") if args.only else list(TARGETS)
+    ctx = Ctx(root=ROOT, palette=_load(args.palette)[1], dry_run=args.dry_run)
+    todo = apply(ctx, names)
+    print("\n".join(ctx.log) or "already applied")
+    if todo:
+        print("\nleft to do by hand:\n" + "\n".join(f"  - {t}" for t in todo))
+    return 0
 
 
 def cmd_check(args: argparse.Namespace) -> int:
@@ -40,6 +65,7 @@ def cmd_check(args: argparse.Namespace) -> int:
     for path, text in render_all(ROOT, palette, settings).items():
         if not path.exists() or path.read_text() != text:
             problems.append(f"stale: {path.relative_to(ROOT)} (run: uv run lambda build)")
+    problems += [f"stale: {rel} (run: uv run lambda build)" for rel in assets.stale(ROOT, palette)]
     for p in problems:
         print(p, file=sys.stderr)
     if not problems:
@@ -75,6 +101,11 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--output", metavar="NAME", help="with several wallpapers, take the one on this screen (e.g. DP-1)")
     p.add_argument("--no-open", dest="open", action="store_false", help="only write the file, do not open a browser")
     p.set_defaults(func=cmd_preview)
+    a = sub.add_parser("apply", help="build, then install the themes where each app reads them")
+    a.add_argument("--only", metavar="A,B", help=f"comma-separated targets (default: all of {', '.join(TARGETS)})")
+    a.add_argument("--dry-run", action="store_true", help="print what would change, change nothing")
+    a.add_argument("--list", action="store_true", help="list the targets")
+    a.set_defaults(func=cmd_apply)
     args = parser.parse_args(argv)
     try:
         return args.func(args)
