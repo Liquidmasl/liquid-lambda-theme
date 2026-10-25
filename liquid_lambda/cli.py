@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import sys
+import webbrowser
 from pathlib import Path
 
 from .cosmic import current_wallpaper
@@ -57,6 +58,8 @@ def cmd_preview(args: argparse.Namespace) -> int:
     out = ROOT / LOCAL_PREVIEW
     out.write_text(render_preview(ROOT, palette, settings, Path(wallpaper) if wallpaper else None))
     print(out)
+    if args.open:
+        webbrowser.open(out.as_uri())
     return 0
 
 
@@ -70,6 +73,7 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--wallpaper", nargs="?", const=COSMIC, metavar="PATH",
                    help="image behind the mock desktop, stays local; without PATH, the one COSMIC shows")
     p.add_argument("--output", metavar="NAME", help="with several wallpapers, take the one on this screen (e.g. DP-1)")
+    p.add_argument("--no-open", dest="open", action="store_false", help="only write the file, do not open a browser")
     p.set_defaults(func=cmd_preview)
     args = parser.parse_args(argv)
     try:
