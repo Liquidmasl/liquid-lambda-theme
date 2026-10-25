@@ -157,6 +157,13 @@ def cosmic(ctx: Ctx) -> list[str]:
     return [f"COSMIC: Settings -> Desktop -> Appearance -> Dark -> Import  {ron}"]
 
 
+def chromium(ctx: Ctx) -> list[str]:
+    # a browser theme can only be loaded from its extensions page
+    theme = (ctx.root / "chromium/theme").resolve()
+    return [f"Chromium/Brave/Chrome: once, extensions page -> Developer mode -> Load unpacked -> {theme}; "
+            "after each build, press reload on the theme's card"]
+
+
 PRISMANTIS = "prismantis@prismantis"
 
 
@@ -180,6 +187,7 @@ TARGETS: dict[str, Callable[[Ctx], list[str]]] = {
     "fastfetch": fastfetch,
     "btop": btop,
     "cosmic": cosmic,
+    "chromium": chromium,
 }
 
 

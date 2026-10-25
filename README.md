@@ -63,7 +63,7 @@ is khaki. Errors are told apart by bold and underline.
 
 ```
 .
-├── brave
+├── chromium
 │   ├── theme                    # Chromium theme (manifest + icons), Load unpacked
 │   └── README.md
 ├── btop
@@ -218,19 +218,18 @@ Fully quit Firefox afterward. Details and CSS rules: [`firefox/README.md`](firef
 
 ---
 
-## Brave
+## Chromium (Brave, Chrome)
 
-`brave/theme` is a Chromium theme with the Firefox theme's colours: charcoal
-frame, soot toolbar, sage icons and inactive tabs, orange on the active tab.
-Brave, Chrome, Chromium and Edge take it, and it loads straight from the
-clone, so no Chrome Web Store or Google account is needed:
+`chromium/theme` is a Chromium theme from the palette: charcoal frame, toolbar
+in the first surface, cyan active tab text and new-tab links. Brave, Chrome,
+Chromium and Edge take it, loaded straight from the clone, so no Chrome Web
+Store or Google account is needed:
 
-`brave://extensions` → **Developer mode** → **Load unpacked** → `brave/theme`
+`chrome://extensions` (or `brave://extensions`) → **Developer mode** → **Load unpacked** → `chromium/theme`
 
-Leave the clone in place, Brave keeps reading the folder. Colours, limits and
-packing a `.crx`: [`brave/README.md`](brave/README.md).
-
----
+Leave the clone in place, the browser keeps reading the folder; after a
+`lambda build`, press the reload arrow on the theme's card. Colours, limits and
+packing a `.crx`: [`chromium/README.md`](chromium/README.md).
 
 ## Claude Desktop
 
@@ -466,7 +465,7 @@ cd cosmic-noir-theme
 # optional extra chrome
 ./firefox/install.sh
 
-# brave: brave://extensions → Developer mode → Load unpacked → brave/theme
+# chromium: chrome://extensions → Developer mode → Load unpacked → chromium/theme
 
 # claude desktop (claude-desktop-extra), then Ctrl+Shift+T
 ./claude-desktop/install.sh
