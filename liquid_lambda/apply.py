@@ -20,12 +20,16 @@ from collections.abc import Callable
 from dataclasses import dataclass, field
 from pathlib import Path
 
+from . import kvantum as kv
+from .palette import Palette
+
 STAMP = time.strftime("%Y%m%d-%H%M%S")
 
 
 @dataclass
 class Ctx:
     root: Path
+    palette: Palette
     dry_run: bool = False
     log: list[str] = field(default_factory=list)
     todo: list[str] = field(default_factory=list)
@@ -164,6 +168,17 @@ def chromium(ctx: Ctx) -> list[str]:
             "after each build, press reload on the theme's card"]
 
 
+def kvantum(ctx: Ctx) -> list[str]:
+    if not kv.SOURCE.is_dir():
+        return [f"Kvantum: {kv.SOURCE} not found; install Kvantum (apt install qt-style-kvantum qt-style-kvantum-themes)"]
+    for name, text in kv.build(ctx.palette).items():
+        write(ctx, ctx.config / "Kvantum" / kv.NAME / name, text)
+    sel = ctx.config / "Kvantum/kvantum.kvconfig"
+    text = sel.read_text() if sel.exists() else "[General]\n"
+    write(ctx, sel, kv._set_keys(text, "General", {"theme": kv.NAME}))
+    return ["Kvantum: Qt apps need QT_STYLE_OVERRIDE=kvantum in their environment; restart them"]
+
+
 EDITORS = ("cursor", "code", "codium")
 
 
@@ -202,6 +217,7 @@ TARGETS: dict[str, Callable[[Ctx], list[str]]] = {
     "cosmic": cosmic,
     "chromium": chromium,
     "vscode": vscode,
+    "kvantum": kvantum,
 }
 
 

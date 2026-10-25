@@ -4,7 +4,11 @@ import tomllib
 import pytest
 
 from liquid_lambda.apply import Ctx, apply, with_block
+from liquid_lambda import kvantum
 from liquid_lambda.cli import ROOT
+from liquid_lambda.palette import Settings, build
+
+PALETTE = build(Settings())
 
 
 @pytest.fixture
@@ -23,26 +27,26 @@ def test_with_block_inserts_then_replaces():
 
 
 def test_wezterm_links_scheme_and_asks_for_color_scheme(home):
-    todo = apply(Ctx(ROOT), ["wezterm"])
+    todo = apply(Ctx(ROOT, PALETTE), ["wezterm"])
     dest = home / ".config/wezterm/colors/Lambda.toml"
     assert dest.is_symlink() and dest.resolve() == (ROOT / "wezterm/Lambda.toml").resolve()
     assert tomllib.loads(dest.read_text())["metadata"]["name"] == "Lambda"
     assert any("color_scheme = 'Lambda'" in t for t in todo)
     (home / ".config/wezterm/wezterm.lua").write_text("config.color_scheme = 'Lambda'\n")
-    assert apply(Ctx(ROOT), ["wezterm"]) == []
+    assert apply(Ctx(ROOT, PALETTE), ["wezterm"]) == []
 
 
 def test_starship_keeps_user_config_and_is_idempotent(home):
     cfg = home / ".config/starship.toml"
     cfg.parent.mkdir(parents=True)
     cfg.write_text('add_newline = false\n\n[hostname]\nstyle = "bold green"\n')
-    apply(Ctx(ROOT), ["starship"])
+    apply(Ctx(ROOT, PALETTE), ["starship"])
     data = tomllib.loads(cfg.read_text())
     assert data["palette"] == "lambda" and data["add_newline"] is False
     assert data["hostname"]["style"] == "bold green"
     assert data["palettes"]["lambda"]["cyan"].startswith("#")
     first = cfg.read_text()
-    ctx = Ctx(ROOT)
+    ctx = Ctx(ROOT, PALETTE)
     apply(ctx, ["starship"])
     assert cfg.read_text() == first and ctx.log == []
     assert list(cfg.parent.glob("starship.toml.bak-*"))
@@ -53,7 +57,7 @@ def test_starship_refuses_a_second_palette(home):
     cfg.parent.mkdir(parents=True)
     cfg.write_text('palette = "mine"\n')
     with pytest.raises(ValueError, match="already selects a palette"):
-        apply(Ctx(ROOT), ["starship"])
+        apply(Ctx(ROOT, PALETTE), ["starship"])
     assert cfg.read_text() == 'palette = "mine"\n'
 
 
@@ -61,7 +65,7 @@ def test_prismantis_merges_colours_and_keeps_other_settings(home):
     path = home / ".claude/settings.json"
     path.parent.mkdir()
     path.write_text(json.dumps({"theme": "dark", "pluginConfigs": {"prismantis@prismantis": {"options": {"tableStyle": "box"}}}}))
-    apply(Ctx(ROOT), ["prismantis"])
+    apply(Ctx(ROOT, PALETTE), ["prismantis"])
     data = json.loads(path.read_text())
     opts = data["pluginConfigs"]["prismantis@prismantis"]["options"]
     assert data["theme"] == "dark" and opts["tableStyle"] == "box"
@@ -69,27 +73,27 @@ def test_prismantis_merges_colours_and_keeps_other_settings(home):
 
 
 def test_dry_run_changes_nothing(home):
-    ctx = Ctx(ROOT, dry_run=True)
+    ctx = Ctx(ROOT, PALETTE, dry_run=True)
     apply(ctx, ["wezterm", "starship"])
     assert ctx.log and not (home / ".config").exists()
 
 
 def test_unknown_target():
     with pytest.raises(ValueError, match="unknown targets"):
-        apply(Ctx(ROOT), ["emacs"])
+        apply(Ctx(ROOT, PALETTE), ["emacs"])
 
 
 def test_zsh_prefers_zshrc_local(home):
     (home / ".zshrc").write_text("# managed elsewhere\n")
     (home / ".zshrc.local").write_text("export FOO=1\n")
-    apply(Ctx(ROOT), ["zsh"])
+    apply(Ctx(ROOT, PALETTE), ["zsh"])
     assert (home / ".zshrc").read_text() == "# managed elsewhere\n"
     local = (home / ".zshrc.local").read_text()
     assert local.startswith("export FOO=1\n") and str(ROOT / "zsh/lambda.zsh") in local
 
 
 def test_fastfetch_links_config_and_logo(home):
-    apply(Ctx(ROOT), ["fastfetch"])
+    apply(Ctx(ROOT, PALETTE), ["fastfetch"])
     for name in ("config.jsonc", "cosmic.txt"):
         assert (home / ".config/fastfetch" / name).is_symlink()
 
@@ -98,6 +102,16 @@ def test_btop_selects_the_theme(home):
     conf = home / ".config/btop/btop.conf"
     conf.parent.mkdir(parents=True)
     conf.write_text('color_theme = "Default"\ntheme_background = true\n')
-    apply(Ctx(ROOT), ["btop"])
+    apply(Ctx(ROOT, PALETTE), ["btop"])
     assert 'color_theme = "Lambda"' in conf.read_text() and "theme_background = true" in conf.read_text()
     assert (home / ".config/btop/themes/Lambda.theme").is_symlink()
+
+
+@pytest.mark.skipif(not kvantum.SOURCE.is_dir(), reason="Kvantum's KvArcDark is not installed")
+def test_kvantum_builds_and_selects_lambda(home):
+    apply(Ctx(ROOT, PALETTE), ["kvantum"])
+    cfg = (home / ".config/Kvantum/Lambda/Lambda.kvconfig").read_text()
+    assert f"highlight.color={PALETTE.lead.hex_str}" in cfg and "translucent_windows=true" in cfg
+    svg = (home / ".config/Kvantum/Lambda/Lambda.svg").read_text()
+    assert ' rx="' not in svg
+    assert "theme=Lambda" in (home / ".config/Kvantum/kvantum.kvconfig").read_text()

@@ -48,7 +48,7 @@ def cmd_apply(args: argparse.Namespace) -> int:
         print("not applying a palette that fails contrast; fix palette.toml first", file=sys.stderr)
         return 1
     names = args.only.split(",") if args.only else list(TARGETS)
-    ctx = Ctx(root=ROOT, dry_run=args.dry_run)
+    ctx = Ctx(root=ROOT, palette=_load(args.palette)[1], dry_run=args.dry_run)
     todo = apply(ctx, names)
     print("\n".join(ctx.log) or "already applied")
     if todo:
