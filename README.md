@@ -219,7 +219,7 @@ Fully quit Firefox afterward. Details and CSS rules: [`firefox/README.md`](firef
 
 ---
 
-## Websites (GitHub, Reddit, YouTube)
+## Websites (GitHub, Reddit, YouTube, Google)
 
 `web/<site>.user.css` are [Stylus](https://github.com/openstyles/stylus)
 userstyles (Stylus is a browser extension for Chrome, Brave, Edge and
@@ -234,9 +234,14 @@ Install: open the raw file in a browser with Stylus and press **Install**:
 - https://raw.githubusercontent.com/Liquidmasl/liquid-lambda-theme/master/web/github.user.css
 - https://raw.githubusercontent.com/Liquidmasl/liquid-lambda-theme/master/web/reddit.user.css
 - https://raw.githubusercontent.com/Liquidmasl/liquid-lambda-theme/master/web/youtube.user.css
+- https://raw.githubusercontent.com/Liquidmasl/liquid-lambda-theme/master/web/google.user.css (search pages only)
 
 Stylus updates them from there: each build that changes a style bumps its
-`@version`. When a site redesigns, refresh its snapshot and rebuild:
+`@version`. Google's token names are obfuscated and change with its deploys, and
+headless browsers get a captcha there, so its snapshot is read from a real
+browser (the colour custom properties of `document.documentElement` on a
+search page) and is the one most likely to go stale. For the others, when a
+site redesigns, refresh its snapshot and rebuild:
 
 ```bash
 uv run --with playwright python tools/snapshot_web.py github

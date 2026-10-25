@@ -9,7 +9,7 @@
 @updateURL      https://raw.githubusercontent.com/Liquidmasl/liquid-lambda-theme/master/web/github.user.css
 ==/UserStyle== */
 
-@-moz-document domain("github.com"), domain("gist.github.com") {
+@-moz-document domain("github.com") {
   /* 1438 of GitHub's own colour tokens, remapped by liquid_lambda/web.py */
   :root, html, [data-color-mode], [dark], .theme-dark {
     --ansi-black: #372f2e !important;

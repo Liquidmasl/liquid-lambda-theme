@@ -30,16 +30,21 @@ GREY_CHROMA = 0.035  # below this OKLCH chroma a colour counts as a grey
 @dataclass(frozen=True)
 class Site:
     title: str
-    domains: tuple[str, ...]
+    match: tuple[str, ...]  # Stylus @-moz-document conditions
     bg: str  # the site's own page background and body text, anchoring the grey ramp
     fg: str
 
 
 SITES = {
-    "github": Site("GitHub", ("github.com", "gist.github.com"), "--bgColor-default", "--fgColor-default"),
-    "reddit": Site("Reddit", ("reddit.com",), "--color-neutral-background", "--color-neutral-content"),
-    "youtube": Site("YouTube", ("youtube.com",), "--yt-sys-color-baseline--base-background",
+    "github": Site("GitHub", ('domain("github.com")',), "--bgColor-default", "--fgColor-default"),
+    "reddit": Site("Reddit", ('domain("reddit.com")',), "--color-neutral-background", "--color-neutral-content"),
+    "youtube": Site("YouTube", ('domain("youtube.com")',), "--yt-sys-color-baseline--base-background",
                     "--yt-sys-color-baseline--text-primary"),
+    # search pages only: other Google apps (Maps, Docs) reuse the same obfuscated
+    # names for other things. The names change with Google's deploys, so this
+    # snapshot is taken from a real browser (headless gets a captcha) and ages fastest.
+    "google": Site("Google Search", (r'regexp("https://www\\.google\\.(com|at|de)/(search|webhp)?.*")',),
+                   "--cIehld", "--YLNNHc"),
 }
 
 # OKLCH hue ranges of the source accent -> palette role taking its place
@@ -114,7 +119,7 @@ def userstyle(root: Path, name: str, p: Palette) -> dict[str, object]:
     n = seen["n"] if seen["hash"] == digest else seen["n"] + 1
     site = SITES[name]
     return {
-        "name": name, "title": site.title, "domains": site.domains, "decls": decls,
+        "name": name, "title": site.title, "match": site.match, "decls": decls,
         "version": f"1.0.{n}", "update_url": f"{REPO_RAW}/web/{name}.user.css",
         "_state": {"n": n, "hash": digest},
     }

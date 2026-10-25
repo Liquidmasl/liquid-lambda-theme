@@ -1,6 +1,6 @@
 """Snapshot the colour custom properties a site defines in its dark theme.
 
-    uv run --with playwright python tools/snapshot_web.py github reddit youtube
+    uv run --with playwright python tools/snapshot_web.py github reddit youtube google
 
 Writes data/web/<site>.json ({"--var": "colour"}), the input of the web
 userstyles. Re-run when a site changes its design tokens; the userstyles are
@@ -19,6 +19,7 @@ SITES = {
     "github": "https://github.com/Liquidmasl/liquid-lambda-theme",
     "reddit": "https://www.reddit.com/r/unixporn/",
     "youtube": "https://www.youtube.com/",
+    "google": "https://www.google.com/search?q=cosmic+desktop&hl=en",
 }
 COLOUR = re.compile(r"^\s*(#[0-9a-fA-F]{3,8}|rgba?\([^)]*\))\s*$")
 

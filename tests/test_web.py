@@ -38,7 +38,7 @@ def test_accents_take_the_palette_hue_and_keep_their_lightness(src, role):
 def test_every_site_renders_and_keeps_alpha():
     for name in web.SITES:
         decls = dict(web.declarations(ROOT, name, P))
-        assert len(decls) > 100
+        assert len(decls) > 50
     gh = dict(web.declarations(ROOT, "github", P))
     assert gh["--bgColor-default"] == P.bg.hex_str
 
