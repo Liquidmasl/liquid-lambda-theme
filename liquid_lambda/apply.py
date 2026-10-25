@@ -21,6 +21,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from . import kvantum as kv
+from . import web
 from .palette import Palette
 
 STAMP = time.strftime("%Y%m%d-%H%M%S")
@@ -184,6 +185,12 @@ def cursors(ctx: Ctx) -> list[str]:
     return ["Cursor: ./cursors/install.sh (sudo), then reboot; once, later builds only need it re-run"]
 
 
+def userstyles(ctx: Ctx) -> list[str]:
+    # Stylus installs a .user.css from its URL and updates from @updateURL
+    return [f"Stylus (browser extension): open {web.REPO_RAW}/web/{name}.user.css and press Install; "
+            "it updates itself from there" for name in web.SITES]
+
+
 EDITORS = ("cursor", "code", "codium")
 
 
@@ -224,6 +231,7 @@ TARGETS: dict[str, Callable[[Ctx], list[str]]] = {
     "vscode": vscode,
     "kvantum": kvantum,
     "cursors": cursors,
+    "web": userstyles,
 }
 
 

@@ -128,6 +128,12 @@ class Color:
         return Color._from_linear(_oklab_to_linear(*(x + (y - x) * t for x, y in zip(a, b))))
 
     @property
+    def lch(self) -> tuple[float, float, float]:
+        """(L, C, h) in OKLCH."""
+        L, a, b = _linear_to_oklab(*self._linear())
+        return L, math.hypot(a, b), math.degrees(math.atan2(b, a)) % 360
+
+    @property
     def luminance(self) -> float:
         r, g, b = self._linear()
         return 0.2126 * r + 0.7152 * g + 0.0722 * b

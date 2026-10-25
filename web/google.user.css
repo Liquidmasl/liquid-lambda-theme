@@ -1,0 +1,90 @@
+/* ==UserStyle==
+@name           Liquid Lambda · Google Search
+@namespace      github.com/Liquidmasl/liquid-lambda-theme
+@version        1.0.1
+@description    Google Search's dark theme moved onto the Liquid Lambda palette (generated, do not edit)
+@author         Liquid Lambda
+@license        MIT
+@homepageURL    https://github.com/Liquidmasl/liquid-lambda-theme
+@updateURL      https://raw.githubusercontent.com/Liquidmasl/liquid-lambda-theme/master/web/google.user.css
+==/UserStyle== */
+
+@-moz-document regexp("https://www\\.google\\.(com|at|de)/(search|webhp)?.*") {
+  /* 74 of Google Search's own colour tokens, remapped by liquid_lambda/web.py */
+  :root, html, [data-color-mode], [dark], .theme-dark {
+    --Aqn7xd: #372f2d !important;
+    --BRLwE: #302827 !important;
+    --COEmY: #e4e0df !important;
+    --CRMNZd: #e7e4e3 !important;
+    --D9aNi: #e2dedd14 !important;
+    --DEeStf: #18100f !important;
+    --Ehh4mf: #5bd9f1 !important;
+    --EoKObe: #eeebeb !important;
+    --EpFNW: #120a0a !important;
+    --IXoxUe: #9f9998 !important;
+    --Ijc2tf: #211817 !important;
+    --JKqx2: #0fd8f5 !important;
+    --JclFj: #372f2d !important;
+    --KIZPne: #005b69 !important;
+    --LMFHUd: #e7e4e3 !important;
+    --Lm570b: #352d2c !important;
+    --MV2sG: #1e1615 !important;
+    --MoaHse: #50dcf6 !important;
+    --NoaQW: #00151a !important;
+    --Nsm0ce: #5bd9f1 !important;
+    --ONhrGd: #372f2d !important;
+    --PBxOKe: #140c0b !important;
+    --Pa8Wlb: #00899d !important;
+    --QWaaaf: #0d6776 !important;
+    --TMYS9: #5bd9f1 !important;
+    --TSWZIb: #211817 !important;
+    --TyVYld: #00c9e5 !important;
+    --V9ysqf: #eeebeb !important;
+    --VeLyLc: #e7e4e3 !important;
+    --VuZXBd: #e7e4e3 !important;
+    --Wmwad: #50dcf6 !important;
+    --XKMDxc: #1e1615 !important;
+    --Xqboce: #eeebeb !important;
+    --YLNNHc: #e4e0df !important;
+    --YaIeMb: #191110 !important;
+    --Yi4Nb: #372f2d !important;
+    --ZEpPmd: #0d6776 !important;
+    --ZXiaGf: #130b0a !important;
+    --Zia6nf: #302827 !important;
+    --aYn2S: #29201f !important;
+    --aim-button-gradient-end: #03020100 !important;
+    --aim-button-gradient-start: #03020100 !important;
+    --amnPwe: #9f9998 !important;
+    --bbQxAb: #c8c4c2 !important;
+    --bcxd3b: #e4e0df !important;
+    --cIehld: #140c0b !important;
+    --d5F9Lb: #eeebeb !important;
+    --fuvksc: #5bd9f1 !important;
+    --gJjJk: #50dcf6 !important;
+    --gS5jXb: #372f2d !important;
+    --gVUKcd: #03020199 !important;
+    --hwEqod: #e7e4e3 !important;
+    --izGsqb: #00899d !important;
+    --jINu6c: #e7e4e3 !important;
+    --jwFC2e: #005360 !important;
+    --kloG3: #372f2d !important;
+    --lv6yU: #5bd9f1 !important;
+    --mXZkqc: #372f2d !important;
+    --ngPXTb: #5bd9f1 !important;
+    --nwXobb: #0d6776 !important;
+    --p9J9c: #5bd9f1 !important;
+    --pEa0Bc: #b6b1af !important;
+    --qdHZF: #03020199 !important;
+    --rrJJUc: #5bd9f1 !important;
+    --todMNc: #eeebeb !important;
+    --uLz37c: #beb9b8 !important;
+    --vWq1if: #e7e4e3 !important;
+    --vZe0jb: #0d6776 !important;
+    --vdwxpe: #006e7f !important;
+    --xPpiM: #e7e4e3 !important;
+    --xhUGwc: #140c0b !important;
+    --y01ou: #e7e4e3 !important;
+    --yTtsEf: #c6eecd !important;
+    --ywz01c: #ffd0a2 !important;
+  }
+}
