@@ -1,0 +1,24 @@
+[project]
+name = "liquid-lambda"
+version = "0.1.0"
+description = "Liquid Lambda: one palette file rendered into every app theme of a COSMIC rice"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.11"
+dependencies = ["jinja2>=3.1"]
+
+[project.scripts]
+lambda = "liquid_lambda.cli:main"
+
+[dependency-groups]
+dev = ["pytest>=8"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["liquid_lambda"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
