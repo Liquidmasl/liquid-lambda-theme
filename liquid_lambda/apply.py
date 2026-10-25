@@ -13,6 +13,7 @@ import json
 import os
 import re
 import shutil
+import subprocess
 import time
 import tomllib
 from collections.abc import Callable
@@ -27,6 +28,7 @@ class Ctx:
     root: Path
     dry_run: bool = False
     log: list[str] = field(default_factory=list)
+    todo: list[str] = field(default_factory=list)
 
     @property
     def home(self) -> Path:
@@ -38,6 +40,14 @@ class Ctx:
 
     def say(self, msg: str) -> None:
         self.log.append(("would " if self.dry_run else "") + msg)
+
+
+def _chezmoi_check(ctx: Ctx, path: Path) -> None:
+    """A dotfile manager would undo the edit on its next run; say how to keep it."""
+    if shutil.which("chezmoi") and subprocess.run(
+        ["chezmoi", "source-path", str(path)], capture_output=True
+    ).returncode == 0:
+        ctx.todo.append(f"chezmoi manages {path}: keep the change with  chezmoi re-add {path}")
 
 
 def _backup(ctx: Ctx, path: Path) -> None:
@@ -71,6 +81,7 @@ def write(ctx: Ctx, path: Path, text: str) -> None:
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(text)
     ctx.say(f"update {path}")
+    _chezmoi_check(ctx, path)
 
 
 def with_block(text: str, name: str, body: str, at_top: bool = False) -> str:
@@ -91,7 +102,7 @@ def with_block(text: str, name: str, body: str, at_top: bool = False) -> str:
 def wezterm(ctx: Ctx) -> list[str]:
     link(ctx, ctx.root / "wezterm/Lambda.toml", ctx.config / "wezterm/colors/Lambda.toml")
     lua = ctx.config / "wezterm/wezterm.lua"
-    if lua.exists() and re.search(r"""^\s*config\.color_scheme\s*=\s*['"]Lambda['"]""", lua.read_text(), re.M):
+    if lua.exists() and re.search(r"""^\s*(?:config\.)?color_scheme\s*=\s*['"]Lambda['"]""", lua.read_text(), re.M):
         return []
     return [f"WezTerm: set  config.color_scheme = 'Lambda'  in {lua}"]
 
@@ -108,6 +119,35 @@ def starship(ctx: Ctx) -> list[str]:
     tomllib.loads(new)  # never write a config starship cannot parse
     write(ctx, path, new)
     return []
+
+
+def zsh(ctx: Ctx) -> list[str]:
+    # ~/.zshrc.local when there is one: often the machine-local file a dotfile
+    # manager leaves alone
+    rc = ctx.home / ".zshrc.local"
+    if not rc.exists():
+        rc = ctx.home / ".zshrc"
+    text = rc.read_text() if rc.exists() else ""
+    line = f'source "{(ctx.root / "zsh/lambda.zsh").resolve()}"'
+    write(ctx, rc, with_block(text, "zsh", line))
+    return ["zsh: open a new shell (exec zsh)"]
+
+
+def fastfetch(ctx: Ctx) -> list[str]:
+    for name in ("config.jsonc", "cosmic.txt"):
+        link(ctx, ctx.root / "fastfetch" / name, ctx.config / "fastfetch" / name)
+    return []
+
+
+def btop(ctx: Ctx) -> list[str]:
+    link(ctx, ctx.root / "btop/Lambda.theme", ctx.config / "btop/themes/Lambda.theme")
+    conf = ctx.config / "btop/btop.conf"
+    if not conf.exists():
+        return ["btop: start btop once, then apply again to select the theme (or pick Lambda in its options)"]
+    text = conf.read_text()
+    new, n = re.subn(r'^color_theme\s*=.*$', 'color_theme = "Lambda"', text, flags=re.M)
+    write(ctx, conf, new if n else text.rstrip() + '\ncolor_theme = "Lambda"\n')
+    return ["btop: quit running btop first, it rewrites btop.conf on exit"]
 
 
 PRISMANTIS = "prismantis@prismantis"
@@ -129,6 +169,9 @@ TARGETS: dict[str, Callable[[Ctx], list[str]]] = {
     "wezterm": wezterm,
     "starship": starship,
     "prismantis": prismantis,
+    "zsh": zsh,
+    "fastfetch": fastfetch,
+    "btop": btop,
 }
 
 
@@ -139,4 +182,4 @@ def apply(ctx: Ctx, names: list[str]) -> list[str]:
     todo = []
     for name in names:
         todo += TARGETS[name](ctx)
-    return todo
+    return ctx.todo + todo

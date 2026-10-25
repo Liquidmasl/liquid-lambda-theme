@@ -77,3 +77,27 @@ def test_dry_run_changes_nothing(home):
 def test_unknown_target():
     with pytest.raises(ValueError, match="unknown targets"):
         apply(Ctx(ROOT), ["emacs"])
+
+
+def test_zsh_prefers_zshrc_local(home):
+    (home / ".zshrc").write_text("# managed elsewhere\n")
+    (home / ".zshrc.local").write_text("export FOO=1\n")
+    apply(Ctx(ROOT), ["zsh"])
+    assert (home / ".zshrc").read_text() == "# managed elsewhere\n"
+    local = (home / ".zshrc.local").read_text()
+    assert local.startswith("export FOO=1\n") and str(ROOT / "zsh/lambda.zsh") in local
+
+
+def test_fastfetch_links_config_and_logo(home):
+    apply(Ctx(ROOT), ["fastfetch"])
+    for name in ("config.jsonc", "cosmic.txt"):
+        assert (home / ".config/fastfetch" / name).is_symlink()
+
+
+def test_btop_selects_the_theme(home):
+    conf = home / ".config/btop/btop.conf"
+    conf.parent.mkdir(parents=True)
+    conf.write_text('color_theme = "Default"\ntheme_background = true\n')
+    apply(Ctx(ROOT), ["btop"])
+    assert 'color_theme = "Lambda"' in conf.read_text() and "theme_background = true" in conf.read_text()
+    assert (home / ".config/btop/themes/Lambda.theme").is_symlink()
