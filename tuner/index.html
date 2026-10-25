@@ -14,16 +14,16 @@
   color-scheme: dark;
   --bg:#140c0b; --s1:#1d1312; --s2:#261d1b; --s3:#332927; --line:#473d3c;
   --dim:#756c6b; --muted:#928a89; --sub:#bcb6b5; --text:#e4e0df;
-  --lead:#4fdcf6; --lead-ink:#160d0c; --second:#d19555; --second-ink:#160d0c;
-  --cyan:#4fdcf6; --amber:#d19555;
-  --ok:#88ca95; --warn:#d19555; --err:#ef6661; --link:#4fdcf6; --hint:#4fdcf6;
+  --lead:#00dffe; --lead-ink:#160d0c; --second:#d19555; --second-ink:#160d0c;
+  --cyan:#00dffe; --amber:#d19555;
+  --ok:#88ca95; --warn:#d19555; --err:#ef6661; --link:#00dffe; --hint:#00dffe;
   --a0:#261d1b;
   --a1:#ef6661;
   --a2:#88ca95;
   --a3:#d19555;
   --a4:#79a7e2;
   --a5:#c88ec3;
-  --a6:#4fdcf6;
+  --a6:#00dffe;
   --a7:#bcb6b5;
   --a8:#756c6b;
   --a9:#ff8a82;
@@ -377,7 +377,7 @@ td.r, th.r { text-align: right }
 </script>
 <script>
 (() => {
-  const DEF = {"amber_hue": 66, "cyan_hue": 212, "lead": "cyan", "lead_chroma": 85, "pin": {}, "second_loudness": 70, "tint": "warm", "tint_strength": 55};
+  const DEF = {"amber_hue": 66, "cyan_hue": 212, "lead": "cyan", "lead_chroma": 100, "pin": {}, "second_loudness": 70, "tint": "warm", "tint_strength": 55};
   const GATES = [["text", "bg", 4.5], ["sub", "bg", 4.5], ["muted", "bg", 4.5], ["dim", "bg", 3.0], ["text", "surface2", 4.5], ["muted", "surface2", 3.0], ["lead", "bg", 3.0], ["second", "bg", 3.0], ["ok", "bg", 4.5], ["warn", "bg", 4.5], ["err", "bg", 4.5], ["link", "bg", 4.5], ["lead_ink", "lead", 4.5], ["second_ink", "second", 4.5]];
   const KNOBS = ["tint_strength", "second_loudness", "cyan_hue", "amber_hue", "lead_chroma"];
   const STORE = "lambda-tuner";

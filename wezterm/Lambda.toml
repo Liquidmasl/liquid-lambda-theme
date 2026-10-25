@@ -6,16 +6,16 @@
 [colors]
 foreground = '#e4e0df'
 background = '#140c0b'
-cursor_bg = '#4fdcf6'
-cursor_border = '#4fdcf6'
+cursor_bg = '#00dffe'
+cursor_border = '#00dffe'
 cursor_fg = '#160d0c'
 compose_cursor = '#d19555'
-selection_bg = '#2e4247'
+selection_bg = '#294349'
 selection_fg = '#e4e0df'
 scrollbar_thumb = '#332927'
-split = '#438b9a'
+split = '#2f8d9f'
 visual_bell = '#391d1a'
-ansi = ['#261d1b', '#ef6661', '#88ca95', '#d19555', '#79a7e2', '#c88ec3', '#4fdcf6', '#bcb6b5']
+ansi = ['#261d1b', '#ef6661', '#88ca95', '#d19555', '#79a7e2', '#c88ec3', '#00dffe', '#bcb6b5']
 brights = ['#756c6b', '#ff8a82', '#9ee1ab', '#ffb15d', '#97c1f7', '#dfa9da', '#99eeff', '#e4e0df']
 
 [colors.tab_bar]
@@ -40,7 +40,7 @@ fg_color = '#928a89'
 
 [colors.tab_bar.new_tab_hover]
 bg_color = '#1d1312'
-fg_color = '#4fdcf6'
+fg_color = '#00dffe'
 
 [metadata]
 name = 'Lambda'

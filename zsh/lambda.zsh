@@ -5,7 +5,7 @@
 
 # ── File colours ───────────────────────────────────────────────────────────────
 
-export LS_COLORS="di=1;38;2;121;167;226:ln=3;38;2;79;220;246:ex=1;38;2;136;202;149:or=9;38;2;239;102;97:mi=9;38;2;239;102;97:*.rs=38;2;188;182;181:*.py=38;2;188;182;181:*.js=38;2;188;182;181:*.ts=38;2;188;182;181:*.tsx=38;2;188;182;181:*.vue=38;2;188;182;181:*.go=38;2;188;182;181:*.c=38;2;188;182;181:*.h=38;2;188;182;181:*.cpp=38;2;188;182;181:*.lua=38;2;188;182;181:*.sh=38;2;188;182;181:*.zsh=38;2;188;182;181:*.toml=38;2;188;182;181:*.yaml=38;2;188;182;181:*.yml=38;2;188;182;181:*.json=38;2;188;182;181:*.md=38;2;146;138;137:*.txt=38;2;146;138;137:*.rst=38;2;146;138;137:*.pdf=38;2;146;138;137:*.png=38;2;200;142;195:*.jpg=38;2;200;142;195:*.jpeg=38;2;200;142;195:*.webp=38;2;200;142;195:*.gif=38;2;200;142;195:*.svg=38;2;200;142;195:*.avif=38;2;200;142;195:*.mp4=38;2;200;142;195:*.mkv=38;2;200;142;195:*.webm=38;2;200;142;195:*.mov=38;2;200;142;195:*.zip=4;38;2;209;149;85:*.tar=4;38;2;209;149;85:*.gz=4;38;2;209;149;85:*.xz=4;38;2;209;149;85:*.zst=4;38;2;209;149;85:*.7z=4;38;2;209;149;85:*.deb=4;38;2;209;149;85:*.rpm=4;38;2;209;149;85"
+export LS_COLORS="di=1;38;2;121;167;226:ln=3;38;2;0;223;254:ex=1;38;2;136;202;149:or=9;38;2;239;102;97:mi=9;38;2;239;102;97:*.rs=38;2;188;182;181:*.py=38;2;188;182;181:*.js=38;2;188;182;181:*.ts=38;2;188;182;181:*.tsx=38;2;188;182;181:*.vue=38;2;188;182;181:*.go=38;2;188;182;181:*.c=38;2;188;182;181:*.h=38;2;188;182;181:*.cpp=38;2;188;182;181:*.lua=38;2;188;182;181:*.sh=38;2;188;182;181:*.zsh=38;2;188;182;181:*.toml=38;2;188;182;181:*.yaml=38;2;188;182;181:*.yml=38;2;188;182;181:*.json=38;2;188;182;181:*.md=38;2;146;138;137:*.txt=38;2;146;138;137:*.rst=38;2;146;138;137:*.pdf=38;2;146;138;137:*.png=38;2;200;142;195:*.jpg=38;2;200;142;195:*.jpeg=38;2;200;142;195:*.webp=38;2;200;142;195:*.gif=38;2;200;142;195:*.svg=38;2;200;142;195:*.avif=38;2;200;142;195:*.mp4=38;2;200;142;195:*.mkv=38;2;200;142;195:*.webm=38;2;200;142;195:*.mov=38;2;200;142;195:*.zip=4;38;2;209;149;85:*.tar=4;38;2;209;149;85:*.gz=4;38;2;209;149;85:*.xz=4;38;2;209;149;85:*.zst=4;38;2;209;149;85:*.7z=4;38;2;209;149;85:*.deb=4;38;2;209;149;85:*.rpm=4;38;2;209;149;85"
 
 # completion menus read LS_COLORS when they are set up, so refresh them
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
@@ -15,12 +15,12 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#5b5251'
 
 typeset -gA ZSH_HIGHLIGHT_STYLES
-ZSH_HIGHLIGHT_STYLES[command]='fg=#4fdcf6'
-ZSH_HIGHLIGHT_STYLES[builtin]='fg=#4fdcf6'
-ZSH_HIGHLIGHT_STYLES[alias]='fg=#4fdcf6'
-ZSH_HIGHLIGHT_STYLES[function]='fg=#4fdcf6'
-ZSH_HIGHLIGHT_STYLES[hashed-command]='fg=#4fdcf6'
-ZSH_HIGHLIGHT_STYLES[suffix-alias]='fg=#4fdcf6,underline'
+ZSH_HIGHLIGHT_STYLES[command]='fg=#00dffe'
+ZSH_HIGHLIGHT_STYLES[builtin]='fg=#00dffe'
+ZSH_HIGHLIGHT_STYLES[alias]='fg=#00dffe'
+ZSH_HIGHLIGHT_STYLES[function]='fg=#00dffe'
+ZSH_HIGHLIGHT_STYLES[hashed-command]='fg=#00dffe'
+ZSH_HIGHLIGHT_STYLES[suffix-alias]='fg=#00dffe,underline'
 ZSH_HIGHLIGHT_STYLES[precommand]='fg=#88ca95,underline'
 ZSH_HIGHLIGHT_STYLES[reserved-word]='fg=#79a7e2,bold'
 ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=#ef6661,bold,underline'
