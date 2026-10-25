@@ -6,11 +6,13 @@ import argparse
 import sys
 from pathlib import Path
 
+from .cosmic import current_wallpaper
 from .palette import Settings, build, contrast_failures
 from .render import render_all, render_preview
 
 ROOT = Path(__file__).resolve().parents[1]
 LOCAL_PREVIEW = Path("tuner/local.html")  # gitignored: may carry a private wallpaper
+COSMIC = object()  # --wallpaper given without a path
 
 
 def _load(path: Path):
@@ -46,8 +48,14 @@ def cmd_check(args: argparse.Namespace) -> int:
 
 def cmd_preview(args: argparse.Namespace) -> int:
     settings, palette = _load(args.palette)
+    wallpaper = args.wallpaper
+    if wallpaper is COSMIC or args.output:
+        wallpaper = current_wallpaper(args.output)
+        print(f"wallpaper: {wallpaper}")
+    if wallpaper and not Path(wallpaper).is_file():
+        raise ValueError(f"wallpaper not found: {wallpaper}")
     out = ROOT / LOCAL_PREVIEW
-    out.write_text(render_preview(ROOT, palette, settings, args.wallpaper))
+    out.write_text(render_preview(ROOT, palette, settings, Path(wallpaper) if wallpaper else None))
     print(out)
     return 0
 
@@ -59,7 +67,9 @@ def main(argv: list[str] | None = None) -> int:
     sub.add_parser("build", help="render every template from the palette").set_defaults(func=cmd_build)
     sub.add_parser("check", help="fail on contrast problems or out-of-date generated files").set_defaults(func=cmd_check)
     p = sub.add_parser("preview", help=f"write the tuner to {LOCAL_PREVIEW}, optionally on your wallpaper")
-    p.add_argument("--wallpaper", type=Path, help="image shown behind the mock desktop; stays local")
+    p.add_argument("--wallpaper", nargs="?", const=COSMIC, metavar="PATH",
+                   help="image behind the mock desktop, stays local; without PATH, the one COSMIC shows")
+    p.add_argument("--output", metavar="NAME", help="with several wallpapers, take the one on this screen (e.g. DP-1)")
     p.set_defaults(func=cmd_preview)
     args = parser.parse_args(argv)
     try:

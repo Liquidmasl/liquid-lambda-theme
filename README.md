@@ -24,7 +24,8 @@ Forked from [cosmic-noir-theme](https://github.com/atraxsrc/cosmic-noir-theme).
 ```bash
 uv run lambda build     # render every template in templates/ from palette.toml
 uv run lambda check     # contrast gates + generated files up to date (pre-commit runs this)
-uv run lambda preview --wallpaper ~/Pictures/wall.png   # tuner on your wallpaper, tuner/local.html (not committed)
+uv run lambda preview --wallpaper    # tuner on the wallpaper COSMIC shows, written to tuner/local.html (not committed)
+uv run lambda preview --wallpaper ~/Pictures/wall.png   # or any image; --output DP-1 picks one screen's wallpaper
 ```
 
 Open `tuner/index.html` in a browser, move the sliders, press
