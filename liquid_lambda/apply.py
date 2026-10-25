@@ -164,6 +164,19 @@ def chromium(ctx: Ctx) -> list[str]:
             "after each build, press reload on the theme's card"]
 
 
+EDITORS = ("cursor", "code", "codium")
+
+
+def vscode(ctx: Ctx) -> list[str]:
+    editors = [e for e in EDITORS if shutil.which(e)]
+    if not editors:
+        return ["VS Code/Cursor: no editor CLI on PATH; ./vscode/install.sh builds the .vsix to install by hand"]
+    if not ctx.dry_run:
+        subprocess.run([str(ctx.root / "vscode/install.sh"), *editors], check=True, capture_output=True)
+    ctx.say(f"install the Liquid Lambda extension into {', '.join(editors)}")
+    return ["VS Code/Cursor: Ctrl+K Ctrl+T -> Liquid Lambda (once)"]
+
+
 PRISMANTIS = "prismantis@prismantis"
 
 
@@ -188,6 +201,7 @@ TARGETS: dict[str, Callable[[Ctx], list[str]]] = {
     "btop": btop,
     "cosmic": cosmic,
     "chromium": chromium,
+    "vscode": vscode,
 }
 
 
