@@ -120,25 +120,59 @@ class Look:
     outline: Color
 
 
-# Each adapter: (role, look, palette, sizes) -> frames at every size, or None if the source lacks the role.
-Adapter = Callable[[str, Look, Palette, tuple[int, ...]], list[Frame] | None]
+# Each adapter: (role, look, palette, sizes, scale) -> frames at every size, or None if the source lacks the role.
+Adapter = Callable[[str, Look, Palette, tuple[int, ...], float], list[Frame] | None]
 
 
-def _capitaine(role: str, look: Look, p: Palette, sizes: tuple[int, ...]) -> list[Frame] | None:
+def _zoom(svg: str, k: float, xh: float, yh: float) -> str:
+    """Scale the drawing by k about the hotspot (in viewBox units): the click point stays put."""
+    m = re.search(r'viewBox="([^"]*)"', svg)
+    vx, vy, vw, vh = (float(v) for v in m.group(1).replace(",", " ").split())
+    box = f"{vx + xh - xh / k:g} {vy + yh - yh / k:g} {vw / k:g} {vh / k:g}"
+    return svg[: m.start(1)] + box + svg[m.end(1):]
+
+
+SVG_NS = "http://www.w3.org/2000/svg"
+
+
+def _fill_unpainted(svg: str, colour: str) -> str:
+    """Give shapes without any fill (theirs or a parent's) the body colour.
+
+    SVG paints those black by default; Capitaine relies on that in a few files
+    (top_right_corner), which only looked right while its body was near-black.
+    Blurred shadow shapes keep the default."""
+    ET.register_namespace("", SVG_NS)
+    ET.register_namespace("xlink", "http://www.w3.org/1999/xlink")
+    root = ET.fromstring(svg)
+
+    def walk(el, inherited: bool) -> None:
+        painted = inherited or el.get("fill") is not None or "fill:" in (el.get("style") or "")
+        if el.tag == f"{{{SVG_NS}}}path" and not painted and el.get("filter") is None:
+            el.set("fill", colour)
+        for child in el:
+            walk(child, painted)
+
+    walk(root, False)
+    return ET.tostring(root, encoding="unicode")
+
+
+def _capitaine(role: str, look: Look, p: Palette, sizes: tuple[int, ...], scale: float) -> list[Frame] | None:
     root = fetch("capitaine")
     svgdir, spec = root / "src/svg/dark", root / "src/config"
     m = {"1a1a1a": look.body.strip, "#fff": look.outline.hex_str, "#ffffff": look.outline.hex_str,
          "white": look.outline.hex_str}
     if (spec / f"static/{role}.spec").exists():
         xh, yh = (float(v) for v in (spec / f"static/{role}.spec").read_text().split()[:2])
-        svg = _recolour((svgdir / f"{role}.svg").read_text(), m, p)
+        svg = _recolour(_fill_unpainted((svgdir / f"{role}.svg").read_text(), "#1a1a1a"), m, p)
+        svg = _zoom(svg, scale, xh, yh)
         return [Frame(s, _render(svg, s), round(xh * s / 24), round(yh * s / 24)) for s in sizes]
     if (spec / f"animated/{role}.spec").exists():
         xh, yh, n, delay = (float(v) for v in (spec / f"animated/{role}.spec").read_text().split()[:4])
         frames = []
         for s in sizes:
             for i in range(int(n)):
-                svg = _recolour((svgdir / f"{role}-{i:02d}.svg").read_text(), m, p)
+                svg = _recolour(_fill_unpainted((svgdir / f"{role}-{i:02d}.svg").read_text(), "#1a1a1a"), m, p)
+                svg = _zoom(svg, scale, xh, yh)
                 frames.append(Frame(s, _render(svg, s), round(xh * s / 24), round(yh * s / 24), int(delay)))
         return frames
     return None
@@ -148,7 +182,7 @@ BIBATA_SCALE = 0.75
 BIBATA_FILES = {"default": "left_ptr", "pointer": "hand2", "text": "xterm", "openhand": "hand1", "dnd-move": "grabbing"}
 
 
-def _bibata(role: str, look: Look, p: Palette, sizes: tuple[int, ...]) -> list[Frame] | None:
+def _bibata(role: str, look: Look, p: Palette, sizes: tuple[int, ...], scale: float) -> list[Frame] | None:
     root = fetch("bibata")
     name = BIBATA_FILES.get(role, role)
     path = root / "svg/original" / f"{name}.svg"
@@ -158,18 +192,16 @@ def _bibata(role: str, look: Look, p: Palette, sizes: tuple[int, ...]) -> list[F
     entry = cfg.get(name, {})
     xh, yh = entry.get("x_hotspot", 128), entry.get("y_hotspot", 128)
     svg = _recolour(path.read_text(), {"#00FF00": look.body.hex_str, "#0000FF": look.outline.hex_str}, p)
-    # Bibata draws about 1.4x as large as Capitaine: widen the viewBox so it
-    # shrinks toward the top-left corner, where the hotspot sits
-    span = 256 / BIBATA_SCALE
-    svg = re.sub(r'viewBox="[^"]*"', f'viewBox="0 0 {span:g} {span:g}"', svg, count=1)
-    return [Frame(s, _render(svg, s), round(xh * s / span), round(yh * s / span)) for s in sizes]
+    # Bibata draws about 1.4x as large as Capitaine: shrink it to match first
+    svg = _zoom(svg, BIBATA_SCALE * scale, xh, yh)
+    return [Frame(s, _render(svg, s), round(xh * s / 256), round(yh * s / 256)) for s in sizes]
 
 
 SIMP1E_SLICES = {"wait": ("watch", (12, 12)), "progress": ("left_ptr_watch", None)}
 SIMP1E_DELAY = 30  # ms per frame, 40 frames: 1.2 s a turn
 
 
-def _simp1e(role: str, look: Look, p: Palette, sizes: tuple[int, ...]) -> list[Frame] | None:
+def _simp1e(role: str, look: Look, p: Palette, sizes: tuple[int, ...], scale: float) -> list[Frame] | None:
     if role not in SIMP1E_SLICES:
         return None
     slice_name, hot = SIMP1E_SLICES[role]
@@ -194,13 +226,15 @@ def _simp1e(role: str, look: Look, p: Palette, sizes: tuple[int, ...]) -> list[F
     })
     vw, vh = (float(v) for v in re.search(r'viewBox="0 0 ([\d.]+) ([\d.]+)"', t).groups())
     frames = []
+    ax, ay = hot or (12, 12)  # the point the scale is anchored on, in 24-unit slice coordinates
     for s in sizes:
-        k = s / 24  # the template draws every cursor on a 24 unit grid
+        k = s / 24 * scale  # the template draws every cursor on a 24 unit grid
         sheet = _image(t, round(vw * k), round(vh * k))  # once per size, then cut out each frame
         for lab in sorted(boxes):
             x, y, w, h = boxes[lab]
-            px = _pixels(sheet.crop((round(x * k), round(y * k), round(x * k) + s, round(y * k) + s)))
-            xh, yh = (round(hot[0] * k), round(hot[1] * k)) if hot else _tip(px, s)
+            cx, cy = round((x + ax) * k - ax * s / 24), round((y + ay) * k - ay * s / 24)
+            px = _pixels(sheet.crop((cx, cy, cx + s, cy + s)))
+            xh, yh = (round(ax * s / 24), round(ay * s / 24)) if hot else _tip(px, s)
             frames.append(Frame(s, px, xh, yh, SIMP1E_DELAY))
     return frames
 
@@ -264,24 +298,28 @@ EXTRA_ALIASES = {
 }
 
 
-def validate(recipe: dict[str, str]) -> None:
+def validate(recipe: dict[str, object]) -> None:
     """Fail on a [cursor] recipe that names an unknown source, before anything is fetched."""
+    scales = recipe.get("scale", {})
+    if not isinstance(scales, dict) or not all(isinstance(v, (int, float)) and 0.5 <= v <= 1.5 for v in scales.values()):
+        raise ValueError("[cursor.scale]: role = factor, each between 0.5 and 1.5")
     size = recipe.get("size", 24)
     if not isinstance(size, int) or not 16 <= size <= 128:
         raise ValueError(f"[cursor] size = {size!r}: a whole number of pixels, 16-128")
     if recipe.get("base", "capitaine") != "capitaine":
         raise ValueError("[cursor] base: only capitaine provides a full cursor set so far")
     for role, source in recipe.items():
-        if role in ("base", "size") or (role == "progress" and source == "compose"):
+        if role in ("base", "size", "scale") or (role == "progress" and source == "compose"):
             continue
         if source not in ADAPTERS:
             raise ValueError(f"[cursor] {role} = {source!r}: unknown source; known: {', '.join(ADAPTERS)}")
 
 
-def build(p: Palette, recipe: dict[str, str], out: Path) -> list[str]:
+def build(p: Palette, recipe: dict[str, object], out: Path) -> list[str]:
     """Write the cursor theme to out (replacing it); returns the roles taken from each non-base source."""
     validate(recipe)
     sizes = tuple(sorted({*SIZES, int(recipe.get("size", 24))}))
+    scales = recipe.get("scale", {})
     base = recipe.get("base", "capitaine")
     looks = {"default": Look(p.lead, p.bg), "busy": Look(p.surface2, p.lead)}
     root = fetch(base)
@@ -298,7 +336,7 @@ def build(p: Palette, recipe: dict[str, str], out: Path) -> list[str]:
             continue
         source = recipe.get(role, base)
         look = looks["busy"] if role in ("wait", "progress") and source == "simp1e" else looks["default"]
-        frames = ADAPTERS[source](role, look, p, sizes)
+        frames = ADAPTERS[source](role, look, p, sizes, float(scales.get(role, 1.0)))
         if frames is None:
             raise ValueError(f"[cursor] {role} = {source!r}: {source} has no {role} cursor")
         (cursors / role).write_bytes(xcursor(frames))

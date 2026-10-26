@@ -45,3 +45,24 @@ def test_build_mixes_sources(tmp_path):
     assert (cur / "pointer").is_file() and (cur / "hand2").is_symlink()
     wait = (cur / "wait").read_bytes()
     assert struct.unpack_from("<4sIII", wait)[3] == 40 * len({*cursor.SIZES, DEFAULT_CURSOR["size"]})  # animated, every size
+
+
+def test_unpainted_shapes_get_the_body_colour_but_shadows_stay():
+    svg = ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0" filter="url(#a)"/>'
+           '<g fill="#fff"><path d="M1 1"/></g><path d="M2 2"/></svg>')
+    out = cursor._fill_unpainted(svg, "#1a1a1a")
+    assert out.count('fill="#1a1a1a"') == 1  # only the bare path outside the filled group
+    assert 'filter="url(#a)"' in out and 'fill="#fff"' in out
+
+
+def test_zoom_keeps_the_hotspot_in_place():
+    svg = '<svg viewBox="0 0 24 24"></svg>'
+    vx, vy, vw, vh = (float(v) for v in cursor._zoom(svg, 2.0, 4, 2).split('"')[1].split())
+    # the hotspot's fraction of the view box is unchanged, so its pixel is too
+    assert ((4 - vx) / vw, (2 - vy) / vh) == (4 / 24, 2 / 24)
+    assert vw == 12 and vh == 12
+
+
+def test_scale_is_checked():
+    with pytest.raises(ValueError, match="scale"):
+        cursor.validate({"scale": {"text": 3}})

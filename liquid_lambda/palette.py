@@ -43,7 +43,10 @@ BASE_ROLES = (
 )
 
 
-DEFAULT_CURSOR = {"base": "capitaine", "default": "bibata", "wait": "simp1e", "progress": "compose", "size": 32}
+DEFAULT_CURSOR = {
+    "base": "capitaine", "default": "bibata", "wait": "simp1e", "progress": "compose", "size": 32,
+    "scale": {"default": 1.13, "text": 0.93, "wait": 0.92},
+}
 
 
 @dataclass(frozen=True)
@@ -57,7 +60,7 @@ class Settings:
     lead_chroma: float = 85
     pin: dict[str, str] = field(default_factory=dict)
     # cursor recipe: base theme, then role = source for single cursors (see cursor.py)
-    cursor: dict[str, str | int] = field(default_factory=lambda: dict(DEFAULT_CURSOR))
+    cursor: dict[str, object] = field(default_factory=lambda: dict(DEFAULT_CURSOR))
 
     def __post_init__(self) -> None:
         checks = {

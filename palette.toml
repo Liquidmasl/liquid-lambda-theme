@@ -25,3 +25,9 @@ default = "bibata"       # the arrow
 wait = "simp1e"          # busy, animated
 progress = "compose"
 size = 32                # px; 24 is the usual default, 32 and 48 render sharpest
+
+[cursor.scale]
+# Per cursor, scaled about its click point (0.5-1.5); roles not listed stay 1.0
+default = 1.13           # the arrow, 25 px tall at size 32
+text = 0.93              # the I-beam, 25 px tall
+wait = 0.92              # the spinner, 23x23
