@@ -43,6 +43,9 @@ BASE_ROLES = (
 )
 
 
+DEFAULT_CURSOR = {"base": "capitaine", "default": "bibata", "wait": "simp1e", "progress": "compose"}
+
+
 @dataclass(frozen=True)
 class Settings:
     lead: str = "cyan"
@@ -53,6 +56,8 @@ class Settings:
     amber_hue: float = 66
     lead_chroma: float = 85
     pin: dict[str, str] = field(default_factory=dict)
+    # cursor recipe: base theme, then role = source for single cursors (see cursor.py)
+    cursor: dict[str, str] = field(default_factory=lambda: dict(DEFAULT_CURSOR))
 
     def __post_init__(self) -> None:
         checks = {
@@ -74,12 +79,12 @@ class Settings:
     @classmethod
     def load(cls, path: Path) -> Settings:
         data = tomllib.loads(path.read_text())
-        known = {f.name for f in fields(cls)} - {"pin"}
+        known = {f.name for f in fields(cls)} - {"pin", "cursor"}
         section = data.get("palette", {})
         unknown = sorted(set(section) - known)
         if unknown:
             raise ValueError(f"{path}: unknown [palette] keys {unknown}")
-        return cls(**section, pin=data.get("pin", {}))
+        return cls(**section, pin=data.get("pin", {}), cursor={**DEFAULT_CURSOR, **data.get("cursor", {})})
 
 
 @dataclass(frozen=True)

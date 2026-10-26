@@ -14,3 +14,13 @@ lead_chroma = 100        # 40-100, saturation of the lead colour
 [pin]
 # Fix any base role by hand; aliases (link, hint, warn, ANSI) follow it.
 # bg = "#141010"
+
+[cursor]
+# The cursor theme is built by `lambda apply` from vector cursor themes,
+# recoloured to this palette. `base` provides every cursor; any role can be
+# taken from another source instead: capitaine, bibata, simp1e. progress =
+# "compose" draws the default arrow with the wait spinner.
+base = "capitaine"
+default = "bibata"       # the arrow
+wait = "simp1e"          # busy, animated
+progress = "compose"

@@ -3,13 +3,12 @@
 #
 #   ./cursors/uninstall.sh
 #
-# Removes the Oxygen-Lambda-Lead cursor from /usr/share/icons and ~/.local/share/icons.
+# Removes Lambda-Cursors (and the older Oxygen-Lambda-Lead) from /usr/share/icons and ~/.local/share/icons.
 # Cursor settings are reset only when one of them is the active cursor, which puts you
 # back on the Pop!_OS default. Config files get a .bak-<timestamp> copy first.
 set -euo pipefail
 
-RICE="Lambda"
-VARIANTS=(Lead)
+THEMES=(Lambda-Cursors Oxygen-Lambda-Lead)
 SYS="/usr/share/icons"
 USR="$HOME/.local/share/icons"
 STAMP="$(date +%Y%m%d-%H%M%S)"
@@ -17,8 +16,7 @@ ACTIVE="$(sed -n 's/^XCURSOR_THEME=//p' /etc/environment 2>/dev/null | tail -n1)
 
 found=false
 mine=false
-for v in "${VARIANTS[@]}"; do
-  THEME="Oxygen-$RICE-$v"
+for THEME in "${THEMES[@]}"; do
   [[ "$ACTIVE" == "$THEME" ]] && mine=true
   if [[ -d "$SYS/$THEME" ]]; then
     echo "Removing $SYS/$THEME (needs sudo)"
@@ -31,7 +29,7 @@ for v in "${VARIANTS[@]}"; do
     found=true
   fi
 done
-$found || echo "No Oxygen-Lambda cursor is installed"
+$found || echo "No Lambda cursor is installed"
 
 if ! $mine; then
   echo "Done. Active cursor (${ACTIVE:-none}) left as is."

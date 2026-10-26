@@ -20,6 +20,7 @@ from collections.abc import Callable
 from dataclasses import dataclass, field
 from pathlib import Path
 
+from . import cursor as cur
 from . import kvantum as kv
 from . import web
 from .palette import Palette
@@ -31,6 +32,7 @@ STAMP = time.strftime("%Y%m%d-%H%M%S")
 class Ctx:
     root: Path
     palette: Palette
+    cursor: dict[str, str] = field(default_factory=dict)
     dry_run: bool = False
     log: list[str] = field(default_factory=list)
     todo: list[str] = field(default_factory=list)
@@ -181,8 +183,15 @@ def kvantum(ctx: Ctx) -> list[str]:
 
 
 def cursors(ctx: Ctx) -> list[str]:
-    # needs sudo (/etc/environment) and a new login, so it stays a manual step
-    return ["Cursor: ./cursors/install.sh (sudo), then reboot; once, later builds only need it re-run"]
+    out = ctx.home / ".local/share/icons" / cur.NAME
+    if not ctx.dry_run:
+        mixed = cur.build(ctx.palette, ctx.cursor or {}, out)
+        ctx.say(f"build {out} ({', '.join(mixed) or 'base only'})")
+    else:
+        ctx.say(f"build {out}")
+    # activating needs sudo (/etc/environment) and a new login
+    return ["Cursor: once, ./cursors/install.sh (sudo), then log out and back in; "
+            "after later palette changes re-run it to refresh the system copy"]
 
 
 def userstyles(ctx: Ctx) -> list[str]:

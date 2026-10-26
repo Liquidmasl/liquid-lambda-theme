@@ -73,7 +73,7 @@ def parse(value: str) -> tuple[Color, float] | None:
     return None
 
 
-def _role_for_hue(h: float) -> str:
+def role_for_hue(h: float) -> str:
     return next(role for limit, role in HUE_ROLES if h < limit)
 
 
@@ -87,7 +87,7 @@ def remap(colour: Color, site_bg: Color, site_fg: Color, p: Palette) -> Color:
         if t > 1:  # brighter than the text: toward white
             return p.text.mix(Color(255, 255, 255), min(1.0, (t - 1) * 4))
         return p.bg.mix(p.text, t)
-    role = p.roles[_role_for_hue(h)]
+    role = p.roles[role_for_hue(h)]
     _, rc, rh = role.lch
     # keep the site's lightness (its contrast design), take the palette hue; a
     # muted source stays muted, a vivid one goes as far as the palette colour
