@@ -24,3 +24,4 @@ base = "capitaine"
 default = "bibata"       # the arrow
 wait = "simp1e"          # busy, animated
 progress = "compose"
+size = 32                # px; 24 is the usual default, 32 and 48 render sharpest

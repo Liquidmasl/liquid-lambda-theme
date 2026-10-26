@@ -26,7 +26,7 @@ from .color import Color
 from .palette import Palette
 from .web import GREY_CHROMA, role_for_hue
 
-SIZES = (24, 32, 48, 64, 96)
+SIZES = (24, 32, 48, 64, 96)  # always rendered; the [cursor] size is added
 NAME = "Lambda-Cursors"
 
 
@@ -120,11 +120,11 @@ class Look:
     outline: Color
 
 
-# Each adapter: role -> callable(look, palette) -> list[Frame] at every size, or None if missing.
-Adapter = Callable[[str, Look, Palette], list[Frame] | None]
+# Each adapter: (role, look, palette, sizes) -> frames at every size, or None if the source lacks the role.
+Adapter = Callable[[str, Look, Palette, tuple[int, ...]], list[Frame] | None]
 
 
-def _capitaine(role: str, look: Look, p: Palette) -> list[Frame] | None:
+def _capitaine(role: str, look: Look, p: Palette, sizes: tuple[int, ...]) -> list[Frame] | None:
     root = fetch("capitaine")
     svgdir, spec = root / "src/svg/dark", root / "src/config"
     m = {"1a1a1a": look.body.strip, "#fff": look.outline.hex_str, "#ffffff": look.outline.hex_str,
@@ -132,11 +132,11 @@ def _capitaine(role: str, look: Look, p: Palette) -> list[Frame] | None:
     if (spec / f"static/{role}.spec").exists():
         xh, yh = (float(v) for v in (spec / f"static/{role}.spec").read_text().split()[:2])
         svg = _recolour((svgdir / f"{role}.svg").read_text(), m, p)
-        return [Frame(s, _render(svg, s), round(xh * s / 24), round(yh * s / 24)) for s in SIZES]
+        return [Frame(s, _render(svg, s), round(xh * s / 24), round(yh * s / 24)) for s in sizes]
     if (spec / f"animated/{role}.spec").exists():
         xh, yh, n, delay = (float(v) for v in (spec / f"animated/{role}.spec").read_text().split()[:4])
         frames = []
-        for s in SIZES:
+        for s in sizes:
             for i in range(int(n)):
                 svg = _recolour((svgdir / f"{role}-{i:02d}.svg").read_text(), m, p)
                 frames.append(Frame(s, _render(svg, s), round(xh * s / 24), round(yh * s / 24), int(delay)))
@@ -148,7 +148,7 @@ BIBATA_SCALE = 0.75
 BIBATA_FILES = {"default": "left_ptr", "pointer": "hand2", "text": "xterm", "openhand": "hand1", "dnd-move": "grabbing"}
 
 
-def _bibata(role: str, look: Look, p: Palette) -> list[Frame] | None:
+def _bibata(role: str, look: Look, p: Palette, sizes: tuple[int, ...]) -> list[Frame] | None:
     root = fetch("bibata")
     name = BIBATA_FILES.get(role, role)
     path = root / "svg/original" / f"{name}.svg"
@@ -162,14 +162,14 @@ def _bibata(role: str, look: Look, p: Palette) -> list[Frame] | None:
     # shrinks toward the top-left corner, where the hotspot sits
     span = 256 / BIBATA_SCALE
     svg = re.sub(r'viewBox="[^"]*"', f'viewBox="0 0 {span:g} {span:g}"', svg, count=1)
-    return [Frame(s, _render(svg, s), round(xh * s / span), round(yh * s / span)) for s in SIZES]
+    return [Frame(s, _render(svg, s), round(xh * s / span), round(yh * s / span)) for s in sizes]
 
 
 SIMP1E_SLICES = {"wait": ("watch", (12, 12)), "progress": ("left_ptr_watch", None)}
 SIMP1E_DELAY = 30  # ms per frame, 40 frames: 1.2 s a turn
 
 
-def _simp1e(role: str, look: Look, p: Palette) -> list[Frame] | None:
+def _simp1e(role: str, look: Look, p: Palette, sizes: tuple[int, ...]) -> list[Frame] | None:
     if role not in SIMP1E_SLICES:
         return None
     slice_name, hot = SIMP1E_SLICES[role]
@@ -194,7 +194,7 @@ def _simp1e(role: str, look: Look, p: Palette) -> list[Frame] | None:
     })
     vw, vh = (float(v) for v in re.search(r'viewBox="0 0 ([\d.]+) ([\d.]+)"', t).groups())
     frames = []
-    for s in SIZES:
+    for s in sizes:
         k = s / 24  # the template draws every cursor on a 24 unit grid
         sheet = _image(t, round(vw * k), round(vh * k))  # once per size, then cut out each frame
         for lab in sorted(boxes):
@@ -266,10 +266,13 @@ EXTRA_ALIASES = {
 
 def validate(recipe: dict[str, str]) -> None:
     """Fail on a [cursor] recipe that names an unknown source, before anything is fetched."""
+    size = recipe.get("size", 24)
+    if not isinstance(size, int) or not 16 <= size <= 128:
+        raise ValueError(f"[cursor] size = {size!r}: a whole number of pixels, 16-128")
     if recipe.get("base", "capitaine") != "capitaine":
         raise ValueError("[cursor] base: only capitaine provides a full cursor set so far")
     for role, source in recipe.items():
-        if role == "base" or (role == "progress" and source == "compose"):
+        if role in ("base", "size") or (role == "progress" and source == "compose"):
             continue
         if source not in ADAPTERS:
             raise ValueError(f"[cursor] {role} = {source!r}: unknown source; known: {', '.join(ADAPTERS)}")
@@ -278,6 +281,7 @@ def validate(recipe: dict[str, str]) -> None:
 def build(p: Palette, recipe: dict[str, str], out: Path) -> list[str]:
     """Write the cursor theme to out (replacing it); returns the roles taken from each non-base source."""
     validate(recipe)
+    sizes = tuple(sorted({*SIZES, int(recipe.get("size", 24))}))
     base = recipe.get("base", "capitaine")
     looks = {"default": Look(p.lead, p.bg), "busy": Look(p.surface2, p.lead)}
     root = fetch(base)
@@ -294,7 +298,7 @@ def build(p: Palette, recipe: dict[str, str], out: Path) -> list[str]:
             continue
         source = recipe.get(role, base)
         look = looks["busy"] if role in ("wait", "progress") and source == "simp1e" else looks["default"]
-        frames = ADAPTERS[source](role, look, p)
+        frames = ADAPTERS[source](role, look, p, sizes)
         if frames is None:
             raise ValueError(f"[cursor] {role} = {source!r}: {source} has no {role} cursor")
         (cursors / role).write_bytes(xcursor(frames))
@@ -313,7 +317,7 @@ def build(p: Palette, recipe: dict[str, str], out: Path) -> list[str]:
     for link, target in sorted(links.items()):
         if (cursors / target).exists() and not (cursors / link).exists():
             (cursors / link).symlink_to(target)
-    used = {base, *recipe.values()} & set(SOURCES)
+    used = {base, *(v for v in recipe.values() if isinstance(v, str))} & set(SOURCES)
     licences = ", ".join(f"{n} ({SOURCES[n].licence})" for n in sorted(used))
     (out / "index.theme").write_text(
         f"[Icon Theme]\nName={NAME}\nComment=Liquid Lambda cursors from {licences}, recoloured to the palette\n")

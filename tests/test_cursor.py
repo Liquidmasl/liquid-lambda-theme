@@ -20,7 +20,7 @@ def test_xcursor_layout():
     assert len(data) == 16 + 12 * 2 + sum(36 + 4 * f.size ** 2 for f in frames)
 
 
-@pytest.mark.parametrize("recipe", [{"base": "bibata"}, {"pointer": "nope"}, {"wait": "compose"}])
+@pytest.mark.parametrize("recipe", [{"base": "bibata"}, {"pointer": "nope"}, {"wait": "compose"}, {"size": 4}, {"size": "big"}])
 def test_recipe_is_checked_before_fetching(recipe):
     with pytest.raises(ValueError, match=r"\[cursor\]"):
         cursor.validate(recipe)
@@ -44,4 +44,4 @@ def test_build_mixes_sources(tmp_path):
     assert (cur / "left_ptr").resolve() == (cur / "default").resolve()
     assert (cur / "pointer").is_file() and (cur / "hand2").is_symlink()
     wait = (cur / "wait").read_bytes()
-    assert struct.unpack_from("<4sIII", wait)[3] == 40 * len(cursor.SIZES)  # animated, every size
+    assert struct.unpack_from("<4sIII", wait)[3] == 40 * len({*cursor.SIZES, DEFAULT_CURSOR["size"]})  # animated, every size

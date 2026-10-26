@@ -190,8 +190,9 @@ def cursors(ctx: Ctx) -> list[str]:
     else:
         ctx.say(f"build {out}")
     # activating needs sudo (/etc/environment) and a new login
-    return ["Cursor: once, ./cursors/install.sh (sudo), then log out and back in; "
-            "after later palette changes re-run it to refresh the system copy"]
+    size = (ctx.cursor or {}).get("size", 24)
+    return [f"Cursor: once, ./cursors/install.sh --size {size} (sudo), then log out and back in; "
+            "after later palette or size changes re-run it"]
 
 
 def userstyles(ctx: Ctx) -> list[str]:

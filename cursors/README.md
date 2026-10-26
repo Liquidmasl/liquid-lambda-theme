@@ -25,13 +25,14 @@ default = "bibata"
 pointer = "bibata"     # any role name Capitaine has, from any source that has it
 wait = "simp1e"
 progress = "compose"
+size = 32              # px, passed on to install.sh --size
 ```
 
 ## Install
 
 ```bash
 uv run lambda apply --only cursors   # build into ~/.local/share/icons
-./cursors/install.sh                 # activate (sudo), copies to /usr/share/icons too
+./cursors/install.sh --size 32       # activate (sudo), copies to /usr/share/icons too
 reboot                               # or log out and back in
 ```
 
